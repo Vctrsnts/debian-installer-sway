@@ -1,0 +1,9 @@
+# Aplicaciones
+eza
+
+# Temas e iconos
+nwg-look
+
+# Otras herramientas
+htop
+fastfetch
