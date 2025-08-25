@@ -1,5 +1,6 @@
 # Aplicaciones
 eza
+tilix
 
 # Temas e iconos
 nwg-look
