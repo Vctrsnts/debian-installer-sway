@@ -2,4 +2,4 @@
 set $mod Mod4
 
 # Ejecutar fondo dinámico
-exec ~/.config/sway/scripts/background-rotator.sh
+exec ~/.config/sway/config.d/background-rotator.sh
