@@ -1,0 +1,7 @@
+show=drun
+allow-images=true
+image-size=32
+prompt=Buscar...
+insensitive=true
+term=wezterm
+hide-scroll=true
