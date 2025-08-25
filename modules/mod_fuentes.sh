@@ -1,9 +1,12 @@
 #!/bin/bash
-# Módulo: Fuentes - Instalación de Nerd Fonts
+# Módulo: Fuentes - Instalación de Nerd Fonts + Inter + Noto Sans
 
 mod_fuentes(){
   [[ "${ENABLE_FUENTES^^}" == "NO" ]] && { log_warn "Saltando fuentes."; return; }
   [[ "${ENABLE_FUENTES^^}" == "ASK" ]] && ! ask_yes_no "¿Instalar fuentes Nerd Fonts?" "Y" && { log_warn "Fuentes omitidas."; return; }
+
+  log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
+  apt_install fonts-inter fonts-noto
 
   log_info "Instalación de Nerd Fonts…"
   local FONT_DIR="$USER_HOME/.local/share/fonts"
@@ -17,8 +20,19 @@ mod_fuentes(){
     fi
   done
 
-  # Selección de familias
-  local fonts=(CascadiaCode FiraCode Hack Inconsolata JetBrainsMono Meslo Mononoki RobotoMono SourceCodePro UbuntuMono)
+  # Selección de familias Nerd Fonts
+  local fonts=(
+    CascadiaCode
+    FiraCode
+    Hack
+    Inconsolata
+    JetBrainsMono
+    Meslo
+    Mononoki
+    RobotoMono
+    SourceCodePro
+    UbuntuMono
+  )
 
   for font in "${fonts[@]}"; do
     if [[ -d "$FONT_DIR/$font" ]] && find "$FONT_DIR/$font" -type f -name '*.ttf' | grep -q .; then
@@ -51,5 +65,5 @@ mod_fuentes(){
 
   # Refrescar caché de fuentes
   sudo -u "$TARGET_USER" fc-cache -fv "$FONT_DIR" >/dev/null || fc-cache -fv "$FONT_DIR" >/dev/null || true
-  log_success "Fuentes Nerd Fonts instaladas y caché refrescada."
+  log_success "Fuentes instaladas y caché refrescada."
 }
