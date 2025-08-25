@@ -70,7 +70,7 @@ fi
 # Clonar repositorio desde GitHub
 # =======================
 REPO_URL="https://github.com/Vctrsnts/debian-installer-sway.git"
-CLONE_DIR="$HOME/debian-installer-sway.git"
+CLONE_DIR="$HOME/debian-installer-sway"
 
 if [[ ! -d "$CLONE_DIR" ]]; then
   log_success "Clonando repositorio desde GitHub: $REPO_URL"
