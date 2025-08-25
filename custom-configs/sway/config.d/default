@@ -3,3 +3,11 @@ set $mod Mod4
 
 # Ejecutar fondo dinámico
 exec ~/.config/sway/scripts/background-rotator.sh
+
+# wallpaper
+output * background ~/.config/backgrounds/Wallpaper_01.jpg fill
+
+bindsym $mod+Shift+Return exec wezterm
+
+# Atajo para lanzar Wofi (Mod+D)
+bindsym $mod+d exec wofi --show drun
