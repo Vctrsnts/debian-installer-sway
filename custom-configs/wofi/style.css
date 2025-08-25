@@ -1,46 +1,58 @@
+/* ===== Wofi Nordic-Dark Style ===== */
+
+/* Ventana principal */
 window {
     margin: 0px;
-    border: 2px solid #4C566A;
-    background-color: #2E3440;
+    border: 2px solid #4C566A;       /* Gris de borde */
+    background-color: #2E3440;        /* Fondo principal */
     border-radius: 8px;
 }
 
+/* Caja de entrada de texto */
 #input {
-    margin: 5px;
+    margin: 8px;
     border: none;
-    color: #D8DEE9;
-    background-color: #3B4252;
+    color: #D8DEE9;                   /* Texto claro */
+    background-color: #3B4252;        /* Fondo input */
     padding: 8px;
     border-radius: 4px;
 }
 
+/* Contenedor interno */
 #inner-box {
-    margin: 5px;
+    margin: 4px;
     background-color: #2E3440;
 }
 
+/* Contenedor externo */
 #outer-box {
-    margin: 5px;
+    margin: 4px;
     background-color: #2E3440;
 }
 
+/* Lista desplazable */
 #scroll {
     margin: 0px;
 }
 
+/* Texto de cada entrada */
 #text {
-    color: #ECEFF4;
+    color: #ECEFF4;                   /* Texto normal */
+    font-size: 14px;
 }
 
+/* Entrada seleccionada */
 #entry:selected {
-    background-color: #434C5E;
+    background-color: #434C5E;        /* Fondo selección */
     border-radius: 4px;
 }
 
+/* Texto de entrada seleccionada */
 #entry:selected #text {
-    color: #88C0D0;
+    color: #88C0D0;                   /* Acento azul Nordic */
 }
 
+/* Iconos */
 #img {
     margin-right: 8px;
 }
