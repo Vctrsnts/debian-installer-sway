@@ -8,8 +8,7 @@ mod_sway() {
     { log_warn "📁 Sway omitido."; return; }
 
   local pkgs=(
-    sway xwayland
-    wl-clipboard cliphist
+    sway xwayland wl-clipboard cliphist
     curl swaybg swaylock swayidle avahi-daemon acpi acpid
     pavucontrol pipewire playerctl polkit-kde-agent-1 pamixer
   )

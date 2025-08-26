@@ -6,19 +6,11 @@ mod_fuentes(){
   [[ "${ENABLE_FUENTES^^}" == "ASK" ]] && ! ask_yes_no "¿Instalar fuentes Nerd Fonts?" "Y" && { log_warn "Fuentes omitidas."; return; }
 
   log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
-  apt_install unzip fonts-recommended fonts-ubuntu fonts-font-awesome fonts-terminus
+  apt_install fonts-recommended fonts-ubuntu fonts-font-awesome fonts-terminus
   
   log_info "Instalación de Nerd Fonts…"
   local FONT_DIR="$USER_HOME/.local/share/fonts"
   ensure_dirs_user "$FONT_DIR"
-
-  # Dependencias para descargar/descomprimir
-  local deps=(unzip wget)
-  for dep in "${deps[@]}"; do
-    if ! command -v "$dep" >/dev/null 2>&1; then
-      apt_install "$dep"
-    fi
-  done
 
   # Selección de familias Nerd Fonts
   local fonts=(

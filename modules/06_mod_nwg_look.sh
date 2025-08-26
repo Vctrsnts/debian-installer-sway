@@ -31,9 +31,10 @@ mod_nwg_look() {
 
   # === 2. Instalar dependencias de compilación ===
   BUILD_DEPS=(
+      git 
+      unzip 
       build-essential
       pkg-config
-      git
       make
       golang
       libgtk-3-dev
@@ -42,9 +43,8 @@ mod_nwg_look() {
       libpango1.0-dev
       libgdk-pixbuf-xlib-2.0-dev
       libatk1.0-dev
-      unzip
   )
-  sudo apt install -y "${BUILD_DEPS[@]}"
+  sudo apt_install "${BUILD_DEPS[@]}"
 
   # === 4. Descargar última versión estable ===
   echo "⬇️ Descargando nwg-look ${VERSION}..."

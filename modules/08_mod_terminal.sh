@@ -6,11 +6,6 @@ mod_terminal(){
   [[ "${ENABLE_WEZTERM^^}" == "ASK" ]] && \
     ! ask_yes_no "¿Instalar WezTerm como terminal?" "Y" && \
     { log_warn "📁 WezTerm omitido."; return; }
-  
-  local pkgs=(
-    curl gpg
-  )
-  apt_install "${pkgs[@]}"
 
   log_info "Añadiendo el repositorio de WezTerm e instalando..."
 
