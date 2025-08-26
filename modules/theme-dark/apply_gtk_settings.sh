@@ -33,11 +33,11 @@ echo "  Cursor:   $CURSOR_THEME ($CURSOR_SIZE px)"
 mkdir -p "$HOME/.config/gtk-3.0"
 cat << EOF > "$HOME/.config/gtk-3.0/settings.ini"
 [Settings]
-gtk-theme-name=Nordic
+gtk-theme-name=Nordic-Dark
 gtk-icon-theme-name=Colloid-Nord-Dark
-gtk-font-name=$FONT_NAME
-gtk-cursor-theme-name=$CURSOR_THEME
-gtk-cursor-theme-size=$CURSOR_SIZE
+gtk-font-name=Sans 10
+gtk-cursor-theme-name=Adwaita
+gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_BOTH
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
 gtk-button-images=1
@@ -53,11 +53,11 @@ EOF
 
 # GTK2
 cat << EOF > "$HOME/.gtkrc-2.0"
-gtk-theme-name=Nordic"
+gtk-theme-name=Nordic-Dark"
 gtk-icon-theme-name=Colloid-Nord-Dark"
 gtk-font-name=Sans 10"
-gtk-cursor-theme-name="$CURSOR_THEME"
-gtk-cursor-theme-size=$CURSOR_SIZE
+gtk-cursor-theme-name="Adwaita"
+gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_BOTH
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
 gtk-button-images=1
@@ -66,7 +66,7 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=1
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintmedium"
+gtk-xft-hintstyle="hintm1edium"
 gtk-xft-rgba="rgb"
 EOF
 

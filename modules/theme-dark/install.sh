@@ -130,9 +130,11 @@ case "$ICON_THEME" in
 esac
 
 # Aplicar configuración GTK
-gsettings set org.gnome.desktop.interface gtk-theme "$THEME"
-gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME"
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Nordic-Dark'
+gsettings set org.gnome.desktop.interface icon-theme 'Colloid-Nord-Dark'
+gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
+gsettings set org.gnome.desktop.interface font-name 'Sans 10'
 
 # Ejecutar script adicional si existe
 [[ -f "$SCRIPT_DIR/apply_gtk_settings.sh" ]] && bash "$SCRIPT_DIR/apply_gtk_settings.sh"
