@@ -1,0 +1,32 @@
+name: Release automática
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Crear tag con fecha
+        run: |
+          TAG="v$(date +'%Y%m%d%H%M%S')"
+          echo "TAG=$TAG" >> $GITHUB_ENV
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git tag $TAG
+          git push origin $TAG
+
+      - name: Crear release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG }}
+          name: ${{ env.TAG }}
+          body: "Release generada automáticamente"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
