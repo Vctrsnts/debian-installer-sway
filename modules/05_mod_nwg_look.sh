@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mod_nwg_look()) {
+mod_nwg_look() {
   
   if [[ "${ENABLE_NWG_LOOK^^}" != "YES" ]]; then
       log_warn "🚫 NWG_LOOK desactivado en configuración."
