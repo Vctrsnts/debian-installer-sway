@@ -3,24 +3,6 @@
 mod_nwg_look() {
   
   [[ "${ENABLE_NWG_LOOK^^}" == "NO" ]] && { log_warn "🚫 NWG_LOOK desactivado en configuración."; return; }
-  
-#  apt_install golang libgtk-3-dev libcairo2-dev libglib2.0-bin zip cmake cmake-extras unzip make
-
-#  mkdir -p ~/Downloads 
-
-#  cd ~/Downloads
-
-#  wget https://github.com/nwg-piotr/nwg-look/archive/refs/tags/v0.2.6.zip
-#  unzip v0.2.6.zip
-#  cd nwg-look-0.2.6
-
-#  make build
-#  sudo make install
-
-#  cd ..
-#  rm -rf nwg-look-0.2.6
-
-#  rm v0.2.6.zip
 
   # === CONFIGURACIÓN ===
   VERSION="v0.2.7"
@@ -44,7 +26,7 @@ mod_nwg_look() {
       libgdk-pixbuf-xlib-2.0-dev
       libatk1.0-dev
   )
-  sudo apt_install "${BUILD_DEPS[@]}"
+  apt_install "${BUILD_DEPS[@]}"
 
   # === 4. Descargar última versión estable ===
   echo "⬇️ Descargando nwg-look ${VERSION}..."

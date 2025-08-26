@@ -14,7 +14,7 @@ mod_sway() {
   )
 
   apt_install "${pkgs[@]}"
-  
+
   sudo systemctl enable avahi-daemon
   sudo systemctl enable acpid
 
