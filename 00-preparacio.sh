@@ -59,12 +59,14 @@ log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuar
 sudo aptitude
 
 # --- Verificar si Git está instalado ---
-if ! command -v git &> /dev/null; then
-  log_success "Git no está instalado. Procediendo a instalarlo..."
-  sudo apt install -y git
-else
-  log_success "Git ya está instalado."
-fi
+#if ! command -v git &> /dev/null; then
+#  log_success "Git no está instalado. Procediendo a instalarlo..."
+#  sudo apt install -y git
+#else
+#  log_success "Git ya está instalado."
+#fi
+
+sudo apt install -y curl
 
 # =======================
 # Clonar repositorio desde GitHub
