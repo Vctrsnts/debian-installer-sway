@@ -76,7 +76,7 @@ sudo apt install -y curl unzip
 # Descarreguem el ZIP que conte el instalado
 # =======================
 # Nombre del repositorio en formato usuario/repositorio
-log_info "Iniciem la descarrega dels script"
+log_success "Iniciem la descarrega dels script"
 REPO="Vctrsnts/debian-installer-sway"
 LATEST_TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 ZIP_URL="https://github.com/$REPO/archive/refs/tags/$LATEST_TAG.zip"
