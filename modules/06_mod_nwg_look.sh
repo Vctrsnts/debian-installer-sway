@@ -2,10 +2,7 @@
 
 mod_nwg_look() {
   
-  if [[ "${ENABLE_NWG_LOOK^^}" != "YES" ]]; then
-      log_warn "🚫 NWG_LOOK desactivado en configuración."
-      return
-  fi
+  [[ "${ENABLE_NWG_LOOK^^}" == "NO" ]] && { log_warn "🚫 NWG_LOOK desactivado en configuración."; return; }
   
 #  apt_install golang libgtk-3-dev libcairo2-dev libglib2.0-bin zip cmake cmake-extras unzip make
 
@@ -24,7 +21,6 @@ mod_nwg_look() {
 #  rm -rf nwg-look-0.2.6
 
 #  rm v0.2.6.zip
-  set -e
 
   # === CONFIGURACIÓN ===
   VERSION="v0.2.7"
@@ -44,18 +40,11 @@ mod_nwg_look() {
       libcairo2-dev
       libglib2.0-dev
       libpango1.0-dev
-      libgdk-pixbuf2.0-dev
+      libgdk-pixbuf-xlib-2.0-dev
       libatk1.0-dev
       unzip
   )
   sudo apt install -y "${BUILD_DEPS[@]}"
-
-  # === 3. Crear swap temporal de 2 GB ===
-  echo "📦 Creando swap temporal de 2 GB..."
-  sudo fallocate -l 2G /swapfile
-  sudo chmod 600 /swapfile
-  sudo mkswap /swapfile
-  sudo swapon /swapfile
 
   # === 4. Descargar última versión estable ===
   echo "⬇️ Descargando nwg-look ${VERSION}..."
@@ -76,11 +65,9 @@ mod_nwg_look() {
   # === 8. Limpiar archivos temporales ===
   cd ..
   rm -rf "nwg-look-${VERSION#v}" nwg-look.zip
-
-  # === 9. Desactivar y borrar swap temporal ===
-  echo "🧹 Eliminando swap temporal..."
-  sudo swapoff /swapfile
-  sudo rm /swapfile
+  
+  # === 9. Borramos directorio go ===
+  sudo rm -rf ~/go
 
   # === 10. Eliminar dependencias de compilación ===
   echo "🗑️ Eliminando dependencias de compilación..."
