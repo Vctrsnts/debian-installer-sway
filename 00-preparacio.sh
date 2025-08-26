@@ -82,19 +82,16 @@ sudo apt -y autoremove
 log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
 
 # Instalamos aptitude para el triaje de paquetes
-sudo apt install -y aptitude
+# sudo apt install -y aptitude
 
-sudo aptitude
+# sudo aptitude
 
-# --- Verificar si Git está instalado ---
-#if ! command -v git &> /dev/null; then
-#  log_success "Git no está instalado. Procediendo a instalarlo..."
-#  sudo apt install -y git
-#else
-#  log_success "Git ya está instalado."
-#fi
+# === 2. Instalar dependencias de compilación ===
+local pkgs=(
+  wget curl gpg unzip
+)
 
-sudo apt install -y curl unzip
+apt_install "${pkgs[@]}"
 
 # =======================
 # Descarreguem el ZIP que conte el instalado
