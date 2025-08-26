@@ -8,7 +8,11 @@ NC='\033[0m' # Sin color
 
 # Funciones de log
 log_success() {
-  echo -e "${GREEN}=== $1 ===${NC}"
+  echo -e "${GREEN}"
+  echo "=========================================="
+  echo -e "=== $1 ==="
+  echo "=========================================="
+  echo -e "${NC}"
 }
 
 # Este script prepara el sistema para la transicion a Debian Unstable.
@@ -66,43 +70,44 @@ sudo aptitude
 #  log_success "Git ya está instalado."
 #fi
 
-sudo apt install -y curl
+sudo apt install -y curl unzip
 
 # =======================
-# Clonar repositorio desde GitHub
+# Descarreguem el ZIP que conte el instalado
 # =======================
 # Nombre del repositorio en formato usuario/repositorio
+log_info "Iniciem la descarrega dels script"
 REPO="Vctrsnts/debian-installer-sway"
-
-# Obtener el nombre del último tag publicado
 LATEST_TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-
-# Construir la URL del ZIP
 ZIP_URL="https://github.com/$REPO/archive/refs/tags/$LATEST_TAG.zip"
+ZIP_FILE="debian-installer-sway.zip"
+TARGET_FOLDER="debian-installer-sway"
 
-# Nombre del archivo ZIP local
-ZIP_FILE="$LATEST_TAG.zip"
-
-# Descargar y descomprimir
+# Descargar el ZIP con nombre personalizado
 wget -O "$ZIP_FILE" "$ZIP_URL"
-unzip "$ZIP_FILE"
 
-if [[ ! -d "$CLONE_DIR" ]]; then
-  log_success "Clonando repositorio desde GitHub: $REPO_URL"
-  git clone "$REPO_URL" "$CLONE_DIR"
-  log_success "Repositorio clonado en: $CLONE_DIR"
-  log_success "Puedes continuar la instalación ejecutando:"
-  echo -e "${GREEN}cd $CLONE_DIR && ./01-instalacio.sh${NC}"
-else
-  log_success "El repositorio ya existe en: $CLONE_DIR"
-  log_success "Si deseas actualizarlo, ejecuta:"
-  echo -e "${GREEN}cd $CLONE_DIR && git pull${NC}"
-fi
+# Descomprimir en carpeta temporal
+TEMP_FOLDER="temp_extract"
+mkdir -p "$TEMP_FOLDER"
+unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
+
+# Detectar la carpeta interna (la única que hay dentro del ZIP)
+INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
+
+# Crear carpeta destino y mover contenido
+mkdir -p "$TARGET_FOLDER"
+mv "$INNER_FOLDER"/* "$TARGET_FOLDER"
+
+# Limpiar
+rm -r "$TEMP_FOLDER"
+rm "$ZIP_FILE"
+
+log_success "Finalitzacio de la descarrega dels script"
 
 log_success "Se ejecuta la actualización del funcionamiento de los sources"
 sudo apt -y modernize-sources
 
 log_success "Eliminamos aplicacion aptitude"
-sudo apt purge -y aptitude && sudo apt -y autoremove
+sudo apt purge -y aptitude w3m && sudo apt -y autoremove
 
 exit 0
