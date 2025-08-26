@@ -51,14 +51,38 @@ log_success "¡ADVERTENCIA! El siguiente paso podría eliminar paquetes. Revisa 
 sudo apt -y update
 sudo apt -y full-upgrade
 
-# Instalamos aptitude para el triaje de paquetes
-sudo apt install -y aptitude
-
 # Eliminamos paquetes conocidos
-sudo apt purge -y bluez bluetooth debian-faq debian-reference-common debian-reference-es doc-debian manpages manpages-es nano emacsen-common aspell aspell-es dictionaries-common ispanish ispell wspanish task-spanish laptop-detect
+local pkgs=(
+  bluez bluetooth 
+  debian-faq debian-reference-common 
+  debian-reference-es 
+  doc-debian manpages 
+  manpages-es nano 
+  emacsen-common aspell 
+  aspell-es dictionaries-common 
+  ispanish ispell 
+  wspanish task-spanish 
+  laptop-detect
+  apt-listchanges reportbug python3-reportbug
+  python3-apt distro-info-data iso-codes
+  python3-requests python3-debian
+  python3-charset-normalizer
+  python3-urllib3 python3-idna
+  lsb-release python-apt-common
+  python3-certifi python3-chardet
+  python3-debconf python3-debianbts
+  python3 libpython3-stdlib python3.13
+  libpython3.13-stdlib python3-minimal
+  python3.13-minimal libpython3.13-minimal
+)
+
+sudo apt purge -y "${pkgs[@]}"
 sudo apt -y autoremove
 
 log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
+
+# Instalamos aptitude para el triaje de paquetes
+sudo apt install -y aptitude
 
 sudo aptitude
 
