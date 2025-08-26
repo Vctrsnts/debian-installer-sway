@@ -10,7 +10,6 @@ mod_sway() {
   local pkgs=(
     sway xwayland
     wl-clipboard cliphist
-    fonts-dejavu-core fonts-noto-color-emoji
     curl swaybg swaylock swayidle avahi-daemon acpi acpid
     pavucontrol pipewire playerctl polkit-kde-agent-1 pamixer
   )
