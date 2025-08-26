@@ -131,16 +131,17 @@ done
 # =======================
 [[ "$ENABLE_SWAY" == "YES" ]]            && mod_sway
 [[ "$ENABLE_WAYBAR" == "YES" ]]          && mod_waybar
-[[ "$LAUNCHER_MODE" == "ROFI" ]]         && mod_launcher
-[[ "$ENABLE_WEZTERM" == "YES" ]]         && mod_terminal
-[[ "$ENABLE_NWG_LOOK" == "YES" ]]        && mod_nwg_look
 [[ "$ENABLE_NOTIFICATIONS" == "YES" ]]   && mod_notifications
-[[ "$ENABLE_THEMES" == "YES" ]]          && mod_themes
 [[ "$ENABLE_LOGIN_MANAGER" == "YES" ]]   && mod_login_manager
-[[ "$ENABLE_USER_EXTRAS" == "YES" ]]     && mod_user_extras
-[[ "$ENABLE_PACKAGE_LIST" == "YES" ]]    && mod_package_list
+[[ "$ENABLE_NWG_LOOK" == "YES" ]]        && mod_nwg_look
 [[ "$ENABLE_FUENTES" == "YES" ]]         && mod_fuentes
+[[ "$ENABLE_WEZTERM" == "YES" ]]         && mod_terminal
+[[ "$LAUNCHER_MODE" == "ROFI" ]]         && mod_launcher
 [[ "$ENABLE_CONFIGS" == "YES" ]]         && mod_configs
+[[ "$ENABLE_PACKAGE_LIST" == "YES" ]]    && mod_package_list
+[[ "$ENABLE_THEMES" == "YES" ]]          && mod_themes
+[[ "$ENABLE_USER_EXTRAS" == "YES" ]]     && mod_user_extras
+
 # =======================
 # Instalacio de themes
 # =======================
