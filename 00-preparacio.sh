@@ -69,8 +69,21 @@ fi
 # =======================
 # Clonar repositorio desde GitHub
 # =======================
-REPO_URL="https://github.com/Vctrsnts/debian-installer-sway.git"
-CLONE_DIR="$HOME/debian-installer-sway"
+# Nombre del repositorio en formato usuario/repositorio
+REPO="Vctrsnts/debian-installer-sway"
+
+# Obtener el nombre del último tag publicado
+LATEST_TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+
+# Construir la URL del ZIP
+ZIP_URL="https://github.com/$REPO/archive/refs/tags/$LATEST_TAG.zip"
+
+# Nombre del archivo ZIP local
+ZIP_FILE="$LATEST_TAG.zip"
+
+# Descargar y descomprimir
+wget -O "$ZIP_FILE" "$ZIP_URL"
+unzip "$ZIP_FILE"
 
 if [[ ! -d "$CLONE_DIR" ]]; then
   log_success "Clonando repositorio desde GitHub: $REPO_URL"
