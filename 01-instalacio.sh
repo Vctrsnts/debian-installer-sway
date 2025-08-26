@@ -119,7 +119,7 @@ done
 # =======================
 # Ejecución condicional
 # =======================
-[[ "$ENABLE_DEPENDENCIES" == "YES" ]]      && mod_dep    
+[[ "$ENABLE_DEPENDENCIES" == "YES" ]]    && mod_dep    
 [[ "$ENABLE_SWAY" == "YES" ]]            && mod_sway
 [[ "$ENABLE_WAYBAR" == "YES" ]]          && mod_waybar
 [[ "$ENABLE_NOTIFICATIONS" == "YES" ]]   && mod_notifications
