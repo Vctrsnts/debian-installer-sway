@@ -33,8 +33,8 @@ echo "  Cursor:   $CURSOR_THEME ($CURSOR_SIZE px)"
 mkdir -p "$HOME/.config/gtk-3.0"
 cat << EOF > "$HOME/.config/gtk-3.0/settings.ini"
 [Settings]
-gtk-theme-name=$GTK_THEME
-gtk-icon-theme-name=$ICON_THEME
+gtk-theme-name=Nordic
+gtk-icon-theme-name=Colloid-Nord-Dark
 gtk-font-name=$FONT_NAME
 gtk-cursor-theme-name=$CURSOR_THEME
 gtk-cursor-theme-size=$CURSOR_SIZE
@@ -46,14 +46,16 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=1
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle=hintfull
+gtk-xft-hintstyle="hintmedium"
+gtk-xft-rgba="rgb"
+gtk-application-prefer-dark-theme=1
 EOF
 
 # GTK2
 cat << EOF > "$HOME/.gtkrc-2.0"
-gtk-theme-name="$GTK_THEME"
-gtk-icon-theme-name="$ICON_THEME"
-gtk-font-name="$FONT_NAME"
+gtk-theme-name=Nordic"
+gtk-icon-theme-name=Colloid-Nord-Dark"
+gtk-font-name=Sans 10"
 gtk-cursor-theme-name="$CURSOR_THEME"
 gtk-cursor-theme-size=$CURSOR_SIZE
 gtk-toolbar-style=GTK_TOOLBAR_BOTH
@@ -64,7 +66,8 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=1
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintfull"
+gtk-xft-hintstyle="hintmedium"
+gtk-xft-rgba="rgb"
 EOF
 
 echo "✅ Configuración GTK aplicada con el tema seleccionado en modules.conf"
