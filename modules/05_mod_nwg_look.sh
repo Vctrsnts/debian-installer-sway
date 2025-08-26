@@ -7,7 +7,7 @@ mod_nwg_look() {
       return
   fi
   
-  apt_install golang libgtk-3-dev libcairo2-dev libglib2.0-bin zip cmake cmake-extras
+  apt_install golang libgtk-3-dev libcairo2-dev libglib2.0-bin zip cmake cmake-extras unzip
 
   mkdir -p ~/Downloads 
 
