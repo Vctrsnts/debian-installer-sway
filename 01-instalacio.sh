@@ -110,16 +110,6 @@ TARGET_USER="${SUDO_USER:-$USER}"
 USER_HOME="$(eval echo "~$TARGET_USER")"
 
 # =======================
-# Verificar e instalar Git
-# =======================
-if ! command -v git &> /dev/null; then
-    log_warn "Git no está instalado. Se procederá a instalarlo..."
-    apt_install git
-else
-    log_info "Git ya está instalado."
-fi
-
-# =======================
 # Cargar módulos
 # =======================
 for module in "$ROOT_DIR"/modules/*.sh; do
@@ -129,6 +119,7 @@ done
 # =======================
 # Ejecución condicional
 # =======================
+[[ "$ENABLE_DEPENDENCIES" == "YES" ]]      && mod_dep    
 [[ "$ENABLE_SWAY" == "YES" ]]            && mod_sway
 [[ "$ENABLE_WAYBAR" == "YES" ]]          && mod_waybar
 [[ "$ENABLE_NOTIFICATIONS" == "YES" ]]   && mod_notifications
