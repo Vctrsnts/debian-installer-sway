@@ -1,33 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-# Detectar el directorio raíz del proyecto (2 niveles arriba)
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CONF_FILE="$ROOT_DIR/modules.conf"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Cargar configuración
-echo "🔍 Buscando configuración en: $CONF_FILE"
-if [[ -f "$CONF_FILE" ]]; then
-    source "$CONF_FILE"
-    echo "✅ Configuración cargada desde modules.conf"
-else
-    echo "❌ No se encontró modules.conf. Abortando..."
-    exit 1
-fi
-
-# Usar las variables del conf, o valores por defecto si no están
-GTK_THEME=${THEME_DARK_NAME:-"Materia-dark"}
-ICON_THEME=${ICON_DARK_NAME:-"Papirus-Dark"}
-FONT_NAME=${GTK_FONT_NAME:-"Sans 10"}
-CURSOR_THEME=${GTK_CURSOR_THEME:-"Adwaita"}
-CURSOR_SIZE=${GTK_CURSOR_SIZE:-0}
-
 echo "🎨 Aplicando configuración GTK:"
-echo "  Tema GTK: $GTK_THEME"
-echo "  Iconos:   $ICON_THEME"
-echo "  Fuente:   $FONT_NAME"
-echo "  Cursor:   $CURSOR_THEME ($CURSOR_SIZE px)"
+echo "  Tema GTK: Nordic-Dark"
+echo "  Iconos:   Collid-Nord-Dark"
+echo "  Fuente:   Sans 10"
+echo "  Cursor:   Adwaita 24px"
 
 # GTK3
 mkdir -p "$HOME/.config/gtk-3.0"
