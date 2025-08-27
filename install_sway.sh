@@ -115,9 +115,10 @@ sudo apt-get upgrade -y
 pkgs=(
   sway swaybg waybar swaylock swayidle sway-notification-center
   wayland-protocols xwayland rofi lxappearance pavucontrol
-  pipewire wireplumber alsa-utils polkitd lxpolkit
+  wireplumber alsa-utils polkitd lxpolkit
   brightnessctl grim slurp clipman wl-clipboard
   avahi-daemon acpi acpid btop greetd gtkgreet curl gpg unzip
+  eza pulseaudio pulseaudio-utils
 )
 apt_install "${pkgs[@]}"
 
