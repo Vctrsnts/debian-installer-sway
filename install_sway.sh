@@ -106,12 +106,6 @@ mod_fuentes(){
   log_success "Fuentes instaladas y caché refrescada."
 }
 
-# Comprobar si el script se ejecuta como root
-#if [[ $EUID -ne 0 ]]; then
-#   echo "Este script debe ser ejecutado como root (o con sudo)."
-#   exit 1
-#fi
-
 log_success "Iniciando la instalación de las aplicaciones esenciales para Sway en Debian Unstable..."
 
 # Actualizar el índice de paquetes y el sistema
