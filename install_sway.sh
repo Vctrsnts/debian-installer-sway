@@ -141,7 +141,7 @@ pkgs=(
   avahi-daemon btop
   greetd nwg-hello acpi acpid 
   curl gpg unzip pulseaudio
-  libpam0g libseat1
+  libpam0g libseat1 foot
 )
 
 sudo systemctl enable avahi-daemon
