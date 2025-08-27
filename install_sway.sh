@@ -1,5 +1,7 @@
 #!/bin/bash
 set -euo pipefail
+# Este script instala los componentes esenciales para un entorno Sway funcional y minimalista
+# en Debian Unstable, con todos los paquetes en una única sección de instalación.
 
 # ===== Colores =====
 RED='\033[0;31m'
@@ -12,7 +14,7 @@ NC='\033[0m'
 TARGET_USER="${SUDO_USER:-$USER}"
 USER_HOME=$(eval echo "~$TARGET_USER")
 
-# ===== Funciones de logging =====
+# Función para manejar errores
 log_error() {
   echo -e "${RED}"
   echo "=========================================="
@@ -35,46 +37,51 @@ log_info() {
   echo "=========================================="
   echo -e "${NC}"
 }
-log_warn() {
-  echo -e "${YELLOW}"
-  echo "=========================================="
-  echo -e "⚠ $1 ⚠"
-  echo "=========================================="
-  echo -e "${NC}"
+apt_install(){
+    sudo apt-get update -y
+    sudo apt-get install -y --no-install-recommends "$@"
 }
-
-# ===== Auxiliares =====
-apt_install() {
-  sudo apt-get install -y --no-install-recommends "$@"
+ensure_dirs_user(){
+    local dir="$1"
+    install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$dir"
 }
-ensure_dirs_user() {
-  local dir="$1"
-  install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$dir"
-}
-
-# ===== Funciones principales =====
-mod_terminal() {
+mod_terminal(){
   log_info "Añadiendo el repositorio de WezTerm e instalando..."
 
-  # Clave GPG
+  # Descargar la clave GPG
   curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+
+  # Agregar el repositorio
   echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+
   sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
 
-  sudo apt-get update -y
+  # Instalar WezTerm
   apt_install wezterm
 
   log_success "🎉 WezTerm instalado correctamente."
 }
-
-mod_fuentes() {
-  log_info "Instalación de fuentes adicionales..."
-  apt_install fonts-recommended fonts-font-awesome fonts-terminus unzip
-
+mod_fuentes(){
+  log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
+  apt_install fonts-font-awesome fonts-terminus
+  
+  log_info "Instalación de Nerd Fonts…"
   local FONT_DIR="$USER_HOME/.local/share/fonts"
   ensure_dirs_user "$FONT_DIR"
 
-  local fonts=(CascadiaCode FiraCode Hack Inconsolata JetBrainsMono Meslo Mononoki RobotoMono SourceCodePro UbuntuMono)
+  # Selección de familias Nerd Fonts
+  local fonts=(
+    CascadiaCode
+    FiraCode
+    Hack
+    Inconsolata
+    JetBrainsMono
+    Meslo
+    Mononoki
+    RobotoMono
+    SourceCodePro
+    UbuntuMono
+  )
 
   for font in "${fonts[@]}"; do
     if [[ -d "$FONT_DIR/$font" ]] && find "$FONT_DIR/$font" -type f -name '*.ttf' | grep -q .; then
@@ -85,13 +92,16 @@ mod_fuentes() {
     local URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/${font}.zip"
     local ZIP_PATH="/tmp/${font}.zip"
 
+    # Descarga
     if ! wget -q --show-progress "$URL" -O "$ZIP_PATH"; then
       log_warn "Fallo al descargar $font desde $URL; se omite."
       continue
     fi
 
+    # Carpeta destino por fuente
     install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$FONT_DIR/$font"
 
+    # Descomprimir y limpiar
     if unzip -qqo "$ZIP_PATH" -d "$FONT_DIR/$font"; then
       chown -R "$TARGET_USER:$TARGET_USER" "$FONT_DIR/$font"
       find "$FONT_DIR/$font" -type f ! -iname '*.ttf' ! -iname '*.otf' -delete || true
@@ -102,51 +112,90 @@ mod_fuentes() {
     rm -f "$ZIP_PATH"
   done
 
-  runuser -u "$TARGET_USER" -- fc-cache -fv "$FONT_DIR" >/dev/null 2>&1 || true
+  # Refrescar caché de fuentes
+  sudo -u "$TARGET_USER" fc-cache -fv "$FONT_DIR" >/dev/null || fc-cache -fv "$FONT_DIR" >/dev/null || true
   log_success "Fuentes instaladas y caché refrescada."
 }
 
-# ===== Ejecución principal =====
-log_success "Iniciando la instalación de aplicaciones esenciales para Sway en Debian Unstable..."
+log_success "Iniciando la instalación de las aplicaciones esenciales para Sway en Debian Unstable..."
 
-sudo apt-get update -y
-sudo apt-get upgrade -y
+# Actualizar el índice de paquetes y el sistema
+log_success "Actualizando el sistema..."
+
+sudo apt update
+sudo apt upgrade -y
+
+# Instalar todos los paquetes necesarios en una sola línea
+# Incluye los componentes de Sway, utilidades del sistema, audio, red, y herramientas de usuario
+log_success "Instalando todos los paquetes necesarios..."
 
 pkgs=(
-  sway swaybg waybar swaylock swayidle sway-notification-center
-  wayland-protocols xwayland rofi lxappearance pavucontrol
-  wireplumber alsa-utils polkitd lxpolkit
-  brightnessctl grim slurp clipman wl-clipboard
-  avahi-daemon acpi acpid btop greetd gtkgreet curl gpg unzip
-  eza pulseaudio pulseaudio-utils
+  sway swaybg waybar swaylock swayidle 
+  sway-notification-center 
+  wayland-protocols xwayland
+  rofi lxappearance pavucontrol
+  wireplumber alsa-utils 
+  polkitd lxpolkit eza
+  grim slurp pulseaudio-utils
+  clipman wl-clipboard 
+  avahi-daemon btop
+  greetd nwg-hello acpi acpid 
+  curl gpg unzip pulseaudio
+  libpam0g libseat1
 )
-apt_install "${pkgs[@]}"
 
 sudo systemctl enable avahi-daemon
 sudo systemctl enable acpid
 
+apt_install "${pkgs[@]}"
+
 log_info "Configurando Greetd y Gtkgreet..."
+
+# Crear el archivo de configuración de Greetd
 cat << EOF | sudo tee /etc/greetd/config.toml > /dev/null
 [terminal]
-vt = 7
+vt = 1
 
 [default_session]
 user = "greeter"
-command = "gtkgreet"
+command = "dbus-run-session gtkgreet --config /etc/greetd/gtkgreet.toml"
 EOF
 
+log_info "Archivo /etc/greetd/config.toml creado."
+
+# Crear el archivo de configuración de Gtkgreet
 cat << EOF | sudo tee /etc/greetd/gtkgreet.toml > /dev/null
 [greeter]
-background = "/ruta/a/tu/imagen.jpg"
+[greeter]
+background = "/usr/share/backgrounds/login.jpg"
 
 [default_session]
 command = "sway"
 EOF
 
+log_info "Archivo /etc/greetd/gtkgreet.toml creado."
+
+sudo mv /home/vsantos/.config/background/login.jpg /usr/share/backgrounds/login.jpg
+sudo chmod 644 /usr/share/backgrounds/login.jpg
+
+# Habilitar el servicio de greetd
+log_info "Habilitando el servicio de greetd..."
+
 sudo systemctl enable greetd.service
 
-# ===== Llamadas a funciones =====
 mod_terminal
 mod_fuentes
 
-echo "✅ Instalación completada. Configura Sway según las indicaciones finales."
+echo "Instalación completada. Se han instalado todos los paquetes necesarios."
+echo ""
+echo "Recuerda que para la configuración, necesitas:"
+echo "1. Añadir los siguientes comandos a tu archivo de configuración de Sway (~/.config/sway/config):"
+echo "   exec lxpolkit"
+echo "   exec --no-startup-id clipman"
+echo "   exec sway-notification-center"
+echo "2. Configurar una combinación de teclas para rofi, por ejemplo: bindsym $mod+d exec rofi -show drun"
+echo "3. Para establecer un fondo de pantalla, añade la siguiente línea a tu archivo de configuración de Sway, reemplazando la ruta con la de tu imagen:"
+echo "   output * bg /ruta/a/tu/imagen.jpg fill"
+echo ""
+echo "Información sobre los temas:"
+echo "Los temas de iconos 'Colloid Dark' y de apariencia 'Nordic' no se encuentran en los repositorios de Debian. Deberás descargarlos e instalarlos manualmente."

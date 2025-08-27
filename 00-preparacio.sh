@@ -52,7 +52,7 @@ sudo apt -y update
 sudo apt -y full-upgrade
 
 # Eliminamos paquetes conocidos
-pkgs=(
+local pkgs=(
   bluez bluetooth 
   debian-faq debian-reference-common 
   debian-reference-es 
@@ -87,11 +87,11 @@ log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuar
 # sudo aptitude
 
 # === 2. Instalar dependencias de compilación ===
-pkgs=(
+local pkgs=(
   wget curl gpg unzip
 )
 
-sudo apt -y install "${pkgs[@]}"
+apt_install "${pkgs[@]}"
 
 # =======================
 # Descarreguem el ZIP que conte el instalado
