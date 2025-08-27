@@ -116,7 +116,7 @@ pkgs=(
   sway swaybg waybar swaylock swayidle sway-notification-center
   wayland-protocols xwayland rofi lxappearance pavucontrol
   pipewire wireplumber alsa-utils polkitd lxpolkit
-  network-manager-gnome brightnessctl grim slurp clipman wl-clipboard
+  brightnessctl grim slurp clipman wl-clipboard
   avahi-daemon acpi acpid btop greetd gtkgreet curl gpg unzip
 )
 apt_install "${pkgs[@]}"
