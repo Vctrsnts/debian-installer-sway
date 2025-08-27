@@ -52,7 +52,7 @@ sudo apt -y update
 sudo apt -y full-upgrade
 
 # Eliminamos paquetes conocidos
-local pkgs=(
+pkgs=(
   bluez bluetooth 
   debian-faq debian-reference-common 
   debian-reference-es 
@@ -87,11 +87,11 @@ log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuar
 # sudo aptitude
 
 # === 2. Instalar dependencias de compilación ===
-local pkgs=(
+pkgs=(
   wget curl gpg unzip
 )
 
-apt_install "${pkgs[@]}"
+sudo apt -y install "${pkgs[@]}"
 
 # =======================
 # Descarreguem el ZIP que conte el instalado
@@ -113,15 +113,15 @@ mkdir -p "$TEMP_FOLDER"
 unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
 
 # Detectar la carpeta interna (la única que hay dentro del ZIP)
-INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
+#INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
 
 # Crear carpeta destino y mover contenido
-mkdir -p "$TARGET_FOLDER"
-mv "$INNER_FOLDER"/* "$TARGET_FOLDER"
+#mkdir -p "$TARGET_FOLDER"
+#mv "$INNER_FOLDER"/* "$TARGET_FOLDER"
 
 # Limpiar
-rm -r "$TEMP_FOLDER"
-rm "$ZIP_FILE"
+#rm -r "$TEMP_FOLDER"
+#rm "$ZIP_FILE"
 
 log_success "Finalitzacio de la descarrega dels script"
 
