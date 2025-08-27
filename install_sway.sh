@@ -51,9 +51,6 @@ mod_terminal(){
   log_success "🎉 WezTerm ha sido instalado correctamente."
 }
 mod_fuentes(){
-  [[ "${ENABLE_FUENTES^^}" == "NO" ]] && { log_warn "Saltando fuentes."; return; }
-  [[ "${ENABLE_FUENTES^^}" == "ASK" ]] && ! ask_yes_no "¿Instalar fuentes Nerd Fonts?" "Y" && { log_warn "Fuentes omitidas."; return; }
-
   log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
   apt_install fonts-recommended fonts-font-awesome fonts-terminus
   
