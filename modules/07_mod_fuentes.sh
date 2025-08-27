@@ -6,7 +6,7 @@ mod_fuentes(){
   [[ "${ENABLE_FUENTES^^}" == "ASK" ]] && ! ask_yes_no "¿Instalar fuentes Nerd Fonts?" "Y" && { log_warn "Fuentes omitidas."; return; }
 
   log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
-  apt_install fonts-recommended fonts-ubuntu fonts-font-awesome fonts-terminus
+  apt_install fonts-recommended fonts-font-awesome fonts-terminus
   
   log_info "Instalación de Nerd Fonts…"
   local FONT_DIR="$USER_HOME/.local/share/fonts"
