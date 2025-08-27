@@ -130,7 +130,6 @@ local pkgs=(
     clipman wl-clipboard 
     avahi-daemon acpi acpid 
     btop greetd gtkgreet
-    
 )
 
 sudo systemctl enable avahi-daemon
@@ -170,6 +169,7 @@ log_info "Habilitando el servicio de greetd..."
 sudo systemctl enable greetd.service
 
 mod_terminal
+mod_fuentes
 
 echo "Instalación completada. Se han instalado todos los paquetes necesarios."
 echo ""
