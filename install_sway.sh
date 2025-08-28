@@ -141,7 +141,7 @@ pkgs=(
   avahi-daemon btop
   greetd nwg-hello acpi acpid 
   curl gpg unzip pulseaudio
-  libpam0g libseat1 foot
+  libpam0g libseat1 foot fastfetch
 )
 
 apt_install "${pkgs[@]}"
