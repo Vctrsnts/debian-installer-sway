@@ -29,7 +29,7 @@
 "cpu": {
     "format": "<span foreground='#E69875'></span> {usage}%",
     "tooltip": false,
-    "on-click": "st -e 'btop'"
+    "on-click": "xterm -e 'btop'"
 },
 "memory": {
     "interval": 1,
