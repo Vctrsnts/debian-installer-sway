@@ -52,7 +52,7 @@ sudo apt -y update
 sudo apt -y full-upgrade
 
 # Eliminamos paquetes conocidos
-local pkgs=(
+pkgs=(
   bluez bluetooth 
   debian-faq debian-reference-common 
   debian-reference-es 
@@ -79,7 +79,7 @@ local pkgs=(
 sudo apt purge -y "${pkgs[@]}"
 sudo apt -y autoremove
 
-log_success "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
+log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
 
 # Instalamos aptitude para el triaje de paquetes
 # sudo apt install -y aptitude
@@ -87,7 +87,11 @@ log_success "Abriendo aptitude para revisión manual. Cuando termines, se contin
 # sudo aptitude
 
 # === 2. Instalar dependencias de compilación ===
-sudo apt install -y --no-install-recommends wget curl gpg unzip
+pkgs=(
+  wget curl gpg unzip
+)
+
+apt_install "${pkgs[@]}"
 
 # =======================
 # Descarreguem el ZIP que conte el instalado
@@ -106,9 +110,9 @@ TARGET_FOLDER="debian-installer-sway"
 wget -O "$ZIP_FILE" "$ZIP_URL"
 
 # Descomprimir en carpeta temporal
-#TEMP_FOLDER="temp_extract"
-#mkdir -p "$TEMP_FOLDER"
-#unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
+TEMP_FOLDER="temp_extract"
+mkdir -p "$TEMP_FOLDER"
+unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
 
 # Detectar la carpeta interna (la única que hay dentro del ZIP)
 #INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
@@ -121,12 +125,12 @@ wget -O "$ZIP_FILE" "$ZIP_URL"
 #rm -r "$TEMP_FOLDER"
 #rm "$ZIP_FILE"
 
+log_success "Finalitzacio de la descarrega dels script"
+
 log_success "Se ejecuta la actualización del funcionamiento de los sources"
 sudo apt -y modernize-sources
 
 log_success "Eliminamos aplicacion aptitude"
 sudo apt purge -y aptitude w3m && sudo apt -y autoremove
-
-log_success "Finalitzacio de la descarrega dels script"
 
 exit 0

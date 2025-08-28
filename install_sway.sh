@@ -116,6 +116,159 @@ mod_fuentes(){
   sudo -u "$TARGET_USER" fc-cache -fv "$FONT_DIR" >/dev/null || fc-cache -fv "$FONT_DIR" >/dev/null || true
   log_success "Fuentes instaladas y caché refrescada."
 }
+#!/usr/bin/env bash
+set -euo pipefail
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+mod_tema_oscuro() {
+  THEME="Nordic"
+  ICON_THEME="Colloid-Dark"
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+  echo "🖤 Aplicando tema GTK oscuro: $THEME con iconos $ICON_THEME"
+
+  TMP_DIR=$(mktemp -d) || { echo "❌ No se pudo crear directorio temporal"; return 1; }
+  ICON_TMP=$(mktemp -d) || { echo "❌ No se pudo crear directorio temporal para iconos"; return 1; }
+  trap 'rm -rf "$TMP_DIR" "$ICON_TMP"' EXIT
+
+  # Dependencias
+  if ! sudo apt update && sudo apt install -y gtk2-engines-murrine git; then
+      echo "❌ Error instalando dependencias"
+      return 1
+  fi
+
+  # Tema Nordic
+  if [[ ! -d "/usr/share/themes/Nordic" ]]; then
+      git clone https://github.com/EliverLara/Nordic.git "$TMP_DIR/Nordic" &&
+      sudo mkdir -p /usr/share/themes/Nordic &&
+      sudo cp -r "$TMP_DIR/Nordic"/* /usr/share/themes/Nordic/ &&
+      echo "🎨 Tema Nordic instalado"
+  else
+      echo "🎨 Tema Nordic ya está instalado"
+  fi
+
+  # Iconos
+  mkdir -p "$HOME/.local/share/icons"
+
+  # Tela-Dark
+  if [[ ! -d "$HOME/.local/share/icons/Tela-Dark" ]]; then
+      git clone https://github.com/vinceliuice/Tela-icon-theme.git "$ICON_TMP/Tela" &&
+      cd "$ICON_TMP/Tela" &&
+      ./install.sh -d "$HOME/.local/share/icons" -c dark &&
+      echo "🧩 Iconos Tela-Dark instalados"
+  else
+      echo "🧩 Iconos Tela-Dark ya están instalados"
+  fi
+
+  # Colloid variantes
+  COLLOID_REPO="https://github.com/vinceliuice/Colloid-icon-theme.git"
+  COLLOID_DIR="$ICON_TMP/Colloid"
+  VARIANT_LIST=("default" "nord" "dracula" "gruvbox" "tokyo-night")
+
+  [[ -d "$COLLOID_DIR" ]] || git clone "$COLLOID_REPO" "$COLLOID_DIR"
+  cd "$COLLOID_DIR" || return 1
+
+  for VARIANT in "${VARIANT_LIST[@]}"; do
+      THEME_NAME="Colloid-${VARIANT^}-Dark"
+      ICON_PATH="$HOME/.local/share/icons/$THEME_NAME"
+      if [[ ! -d "$ICON_PATH" ]]; then
+          [[ "$VARIANT" == "default" ]] \
+              && ./install.sh -d "$HOME/.local/share/icons" \
+              || ./install.sh -d "$HOME/.local/share/icons" -s "$VARIANT"
+          echo "🧩 Iconos Colloid instalados: $VARIANT"
+      else
+          echo "🧩 Iconos Colloid ya instalados: $VARIANT"
+      fi
+  done
+
+  # Aplicar configuración GTK vía gsettings (rápido)
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
+  gsettings set org.gnome.desktop.interface gtk-theme "${THEME}-Dark" || true
+  gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME" || true
+  gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita' || true
+  gsettings set org.gnome.desktop.interface font-name 'Sans 10' || true
+
+  echo "✅ Instalación de temas e iconos completada"
+}
+
+mod_gtk() {
+  echo "🎨 Aplicando configuración GTK:"
+  echo "  Tema GTK: Nordic-Dark"
+  echo "  Iconos:   Colloid-Nord-Dark"
+  echo "  Fuente:   Sans 10"
+  echo "  Cursor:   Adwaita 24px"
+
+  # GTK3
+  mkdir -p "$HOME/.config/gtk-3.0"
+  cat << EOF > "$HOME/.config/gtk-3.0/settings.ini"
+[Settings]
+gtk-theme-name=Nordic-Dark
+gtk-icon-theme-name=Colloid-Nord-Dark
+gtk-font-name=Sans 10
+gtk-cursor-theme-name=Adwaita
+gtk-cursor-theme-size=24
+gtk-toolbar-style=GTK_TOOLBAR_BOTH
+gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+gtk-button-images=1
+gtk-menu-images=1
+gtk-enable-event-sounds=1
+gtk-enable-input-feedback-sounds=1
+gtk-xft-antialias=1
+gtk-xft-hinting=1
+gtk-xft-hintstyle="hintmedium"
+gtk-xft-rgba="rgb"
+gtk-application-prefer-dark-theme=1
+EOF
+
+  # GTK2
+  cat << EOF > "$HOME/.gtkrc-2.0"
+gtk-theme-name="Nordic-Dark"
+gtk-icon-theme-name="Colloid-Nord-Dark"
+gtk-font-name="Sans 10"
+gtk-cursor-theme-name="Adwaita"
+gtk-cursor-theme-size=24
+gtk-toolbar-style=GTK_TOOLBAR_BOTH
+gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+gtk-button-images=1
+gtk-menu-images=1
+gtk-enable-event-sounds=1
+gtk-enable-input-feedback-sounds=1
+gtk-xft-antialias=1
+gtk-xft-hinting=1
+gtk-xft-hintstyle="hintmedium"
+gtk-xft-rgba="rgb"
+EOF
+
+  echo "✅ Configuración GTK aplicada"
+}
+mod_lightdm_greeter() {
+  local CONF_FILE="/etc/lightdm/lightdm-gtk-greeter.conf.d/99-custom.conf"
+
+  echo "⚙ Configurando LightDM GTK Greeter con fondo, tema e iconos..."
+
+  if [[ $EUID -ne 0 ]]; then
+      echo "❌ Esta función debe ejecutarse como root (usa sudo)."
+      return 1
+  fi
+
+  sudo mkdir -p "$(dirname "$CONF_FILE")"
+
+  cat << EOF | sudo tee "$CONF_FILE" > /dev/null
+[greeter]
+background = /usr/share/backgrounds/login.jpg
+theme-name = Nordic-Dark
+icon-theme-name = Colloid-Nord-Dark
+font-name = Sans 11
+xft-antialias = true
+xft-hintstyle = hintmedium
+EOF
+
+  echo "✅ Configuración de LightDM GTK Greeter aplicada"
+  echo "💡 Asegúrate de que la imagen exista en /usr/share/backgrounds/login.jpg"
+}
+
 
 log_success "Iniciando la instalación de las aplicaciones esenciales para Sway en Debian Unstable..."
 
@@ -139,9 +292,10 @@ pkgs=(
   grim slurp pulseaudio-utils
   clipman wl-clipboard 
   avahi-daemon btop
-  acpi acpid 
+  greetd nwg-hello acpi acpid 
   curl gpg unzip pulseaudio
-  libpam0g libseat1 foot fastfetch
+  libpam0g libseat1 fastfetch
+  lightdm lightdm-gtk-greeter st
 )
 
 apt_install "${pkgs[@]}"
@@ -157,13 +311,9 @@ fi
 
 mod_terminal
 mod_fuentes
-
-log_success "Creació directori .config"
-mkdir $HOME/.config
-
-log_success "Actualitzacio del fitxer bashrc"
-cp $HOME/debian-installerr-sway/custom-configs/bashrc $HOME/.bashrc
-source $HOME/.bashrc
+mod_tema_oscuro
+mod_gtk
+mod_lightdm_greeter
 
 echo "Instalación completada. Se han instalado todos los paquetes necesarios."
 echo ""
