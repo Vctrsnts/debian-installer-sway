@@ -139,7 +139,7 @@ pkgs=(
   grim slurp pulseaudio-utils
   clipman wl-clipboard 
   avahi-daemon btop
-  greetd nwg-hello acpi acpid 
+  lightdm acpi acpid 
   curl gpg unzip pulseaudio
   libpam0g libseat1 foot fastfetch
 )
