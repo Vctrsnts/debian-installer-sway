@@ -84,7 +84,7 @@ fi
 # Instalar Tela-Dark (modo usuario)
 if [[ ! -d "$HOME/.local/share/icons/Tela-Dark" ]]; then
   git clone https://github.com/vinceliuice/Tela-icon-theme.git "$TMP_DIR/Tela"
-  cd "$TMP_DIR/Tela" && ./install.sh -d "$HOME/.local/share/icons" -c dark
+  cd "$TMP_DIR/Tela" && ./install.sh -d "$HOME/.local/share/icons" -c nord
   echo "🧩 Iconos Tela-Dark instalados en modo usuario"
 else
   echo "🧩 Iconos Tela-Dark ya están instalados"
