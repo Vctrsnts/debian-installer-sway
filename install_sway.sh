@@ -139,7 +139,7 @@ pkgs=(
   grim slurp pulseaudio-utils
   clipman wl-clipboard 
   avahi-daemon btop
-  lightdm acpi acpid 
+  acpi acpid 
   curl gpg unzip pulseaudio
   libpam0g libseat1 foot fastfetch
 )
@@ -154,25 +154,6 @@ if [ ! -f "/usr/share/wayland-sessions/sway.desktop" ]; then
     log_error "El archivo 'sway.desktop' no se encontró. Asegúrate de que el paquete 'sway' esté instalado y que los archivos de sesión se hayan generado correctamente."
     exit 1
 fi
-
-log_info "Configurando Greetd y Gtkgreet..."
-
-# Crear el archivo de configuración de Greetd
-cat << EOF | sudo tee /etc/greetd/config.toml > /dev/null
-[terminal]
-vt = 1
-
-[default_session]
-user = "greeter"
-command = "nwg-hello"
-EOF
-
-log_info "Archivo /etc/greetd/config.toml creado."
-
-# Habilitar el servicio de greetd
-log_info "Habilitando el servicio de greetd..."
-
-sudo systemctl enable greetd.service
 
 mod_terminal
 mod_fuentes
