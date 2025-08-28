@@ -23,13 +23,13 @@
 },
 "clock": {
     "locale": "C", 
-    "format": "<span foreground='#E69875'> </span><span>{:%I:%M %p}</span>",
+    "format": "<span foreground='#E69875'> </span><span>{:%H:%M}</span>",
     "format-alt": " {:%a,%b %d}" // Icon: calendar-alt
 },
 "cpu": {
     "format": "<span foreground='#E69875'></span> {usage}%",
     "tooltip": false,
-    "on-click": "foot -e 'btop'"
+    "on-click": "st -e 'btop'"
 },
 "memory": {
     "interval": 1,
