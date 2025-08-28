@@ -245,11 +245,6 @@ mod_lightdm_greeter() {
 
   echo "⚙ Configurando LightDM GTK Greeter con fondo, tema e iconos..."
 
-  if [[ $EUID -ne 0 ]]; then
-      echo "❌ Esta función debe ejecutarse como root (usa sudo)."
-      return 1
-  fi
-
   sudo mkdir -p "$(dirname "$CONF_FILE")"
 
   cat << EOF | sudo tee "$CONF_FILE" > /dev/null
