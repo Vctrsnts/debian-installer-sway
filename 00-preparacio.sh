@@ -79,7 +79,7 @@ local pkgs=(
 sudo apt purge -y "${pkgs[@]}"
 sudo apt -y autoremove
 
-log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
+log_success "Abriendo aptitude para revisión manual. Cuando termines, se continuará con la instalación de Git y el repositorio."
 
 # Instalamos aptitude para el triaje de paquetes
 # sudo apt install -y aptitude
@@ -87,11 +87,7 @@ log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuar
 # sudo aptitude
 
 # === 2. Instalar dependencias de compilación ===
-local pkgs=(
-  wget curl gpg unzip
-)
-
-apt_install "${pkgs[@]}"
+sudo apt install -y --no-install-recommends wget curl gpg unzip
 
 # =======================
 # Descarreguem el ZIP que conte el instalado
@@ -110,9 +106,9 @@ TARGET_FOLDER="debian-installer-sway"
 wget -O "$ZIP_FILE" "$ZIP_URL"
 
 # Descomprimir en carpeta temporal
-TEMP_FOLDER="temp_extract"
-mkdir -p "$TEMP_FOLDER"
-unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
+#TEMP_FOLDER="temp_extract"
+#mkdir -p "$TEMP_FOLDER"
+#unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
 
 # Detectar la carpeta interna (la única que hay dentro del ZIP)
 #INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
@@ -125,12 +121,12 @@ unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
 #rm -r "$TEMP_FOLDER"
 #rm "$ZIP_FILE"
 
-log_success "Finalitzacio de la descarrega dels script"
-
 log_success "Se ejecuta la actualización del funcionamiento de los sources"
 sudo apt -y modernize-sources
 
 log_success "Eliminamos aplicacion aptitude"
 sudo apt purge -y aptitude w3m && sudo apt -y autoremove
+
+log_success "Finalitzacio de la descarrega dels script"
 
 exit 0
