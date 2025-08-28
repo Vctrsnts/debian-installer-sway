@@ -87,11 +87,7 @@ log_info "Abriendo aptitude para revisión manual. Cuando termines, se continuar
 # sudo aptitude
 
 # === 2. Instalar dependencias de compilación ===
-pkgs=(
-  wget curl gpg unzip
-)
-
-apt_install "${pkgs[@]}"
+sudo apt install -y --no-install-recommends wget curl gpg unzip
 
 # =======================
 # Descarreguem el ZIP que conte el instalado

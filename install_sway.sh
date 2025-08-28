@@ -291,11 +291,10 @@ pkgs=(
   polkitd lxpolkit eza
   grim slurp pulseaudio-utils
   clipman wl-clipboard 
-  avahi-daemon btop
-  greetd nwg-hello acpi acpid 
-  curl gpg unzip pulseaudio
+  avahi-daemon btop st
+  acpi acpid curl gpg unzip pulseaudio
   libpam0g libseat1 fastfetch
-  lightdm lightdm-gtk-greeter st
+  lightdm lightdm-gtk-greeter 
 )
 
 apt_install "${pkgs[@]}"
