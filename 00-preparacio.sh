@@ -106,9 +106,9 @@ TARGET_FOLDER="debian-installer-sway"
 wget -O "$ZIP_FILE" "$ZIP_URL"
 
 # Descomprimir en carpeta temporal
-TEMP_FOLDER="temp_extract"
-mkdir -p "$TEMP_FOLDER"
-unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
+#TEMP_FOLDER="temp_extract"
+#mkdir -p "$TEMP_FOLDER"
+#unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
 
 # Detectar la carpeta interna (la única que hay dentro del ZIP)
 #INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
