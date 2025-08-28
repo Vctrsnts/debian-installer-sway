@@ -177,6 +177,13 @@ sudo systemctl enable greetd.service
 mod_terminal
 mod_fuentes
 
+log_success "Creació directori .config"
+mkdir $HOME/.config
+
+log_success "Actualitzacio del fitxer bashrc"
+cp $HOME/debian-installerr-sway/custom-configs/bashrc $HOME/.bashrc
+source $HOME/.bashrc
+
 echo "Instalación completada. Se han instalado todos los paquetes necesarios."
 echo ""
 echo "Recuerda que para la configuración, necesitas:"
