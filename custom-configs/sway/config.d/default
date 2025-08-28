@@ -4,8 +4,6 @@ set $gnome-schema org.gnome.desktop.interface
 set $term wezterm
 set $menu rofi -show drun -modi drun -line-padding 4 -hide-scrollbar -show-icons
 
-exec "gtkgreet -l; swaymsg exit"
-
 bindsym Mod4+shift+e exec swaynag \
 	-t warning \
 	-m 'What do you want to do?' \
@@ -27,7 +25,7 @@ font pango:Cantarell 11
 bindsym $mod+d exec $menu
 
 # === RULES ===
-for_window [app_id="kitty"] floating enable, resize set 1280 720
+for_window [app_id="foot"] floating enable, resize set 1280 720
 
 # === WINDOW ===
 bindsym $mod+q kill
