@@ -116,11 +116,6 @@ mod_fuentes(){
   sudo -u "$TARGET_USER" fc-cache -fv "$FONT_DIR" >/dev/null || fc-cache -fv "$FONT_DIR" >/dev/null || true
   log_success "Fuentes instaladas y caché refrescada."
 }
-#!/usr/bin/env bash
-set -euo pipefail
-
-#!/usr/bin/env bash
-set -euo pipefail
 
 mod_tema_oscuro() {
   THEME="Nordic"
@@ -240,6 +235,7 @@ EOF
 
   echo "✅ Configuración GTK aplicada"
 }
+
 mod_lightdm_greeter() {
   local CONF_FILE="/etc/lightdm/lightdm-gtk-greeter.conf.d/99-custom.conf"
 
@@ -261,17 +257,15 @@ EOF
   echo "💡 Asegúrate de que la imagen exista en /usr/share/backgrounds/login.jpg"
 }
 
-
-log_success "Iniciando la instalación de las aplicaciones esenciales para Sway en Debian Unstable..."
-
 # Actualizar el índice de paquetes y el sistema
 log_success "Actualizando el sistema..."
 
 sudo apt update
+
+log_success "Iniciando la instalación de las aplicaciones esenciales para Sway en Debian Unstable..."
 sudo apt upgrade -y
 
 # Instalar todos los paquetes necesarios en una sola línea
-# Incluye los componentes de Sway, utilidades del sistema, audio, red, y herramientas de usuario
 log_success "Instalando todos los paquetes necesarios..."
 
 pkgs=(
@@ -306,6 +300,10 @@ mod_tema_oscuro
 mod_gtk
 mod_lightdm_greeter
 
+log_success "Actualem .bashrc"
+cp $HOME/debian-installer-sway/custom-configs/bashrc $HOME/.bashrc
+source $HOME/.bashrc
+
 echo "Instalación completada. Se han instalado todos los paquetes necesarios."
 echo ""
 echo "Recuerda que para la configuración, necesitas:"
@@ -313,7 +311,7 @@ echo "1. Añadir los siguientes comandos a tu archivo de configuración de Sway 
 echo "   exec lxpolkit"
 echo "   exec --no-startup-id clipman"
 echo "   exec sway-notification-center"
-echo "2. Configurar una combinación de teclas para rofi, por ejemplo: bindsym $mod+d exec rofi -show drun"
+echo "2. Configurar una combinación de teclas para rofi, por ejemplo: bindsym \$mod+d exec rofi -show drun"
 echo "3. Para establecer un fondo de pantalla, añade la siguiente línea a tu archivo de configuración de Sway, reemplazando la ruta con la de tu imagen:"
 echo "   output * bg /ruta/a/tu/imagen.jpg fill"
 echo ""
@@ -324,4 +322,6 @@ echo "Una vez que se ha finalizado la instalación y has ejecutado la instrucci�
 echo "Puedes ejecutar lo siguiente, para copiar el fondo de pantalla que se usara para nwg-hello"
 echo "sudo mv /home/"$USER_HOME"/.config/background/login.jpg /usr/share/backgrounds/login.jpg"
 echo "sudo chmod 644 /usr/share/backgrounds/login.jpg"
+echo ""
+echo "Per si de cas, actualitzar .bashrc a traves de source \$HOME/.bashrc"
 echo ""
