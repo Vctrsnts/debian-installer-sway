@@ -104,6 +104,8 @@ ZIP_URL="https://github.com/$REPO/archive/refs/tags/$LATEST_TAG.zip"
 ZIP_FILE="debian-installer-sway.zip"
 TARGET_FOLDER="debian-installer-sway"
 
+# wget https://github.com/Vctrsnts/debian-installer-sway/archive/refs/tags/v20250827205721.zip
+
 # Descargar el ZIP con nombre personalizado
 wget -O "$ZIP_FILE" "$ZIP_URL"
 
