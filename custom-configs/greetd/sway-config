@@ -1,4 +1,4 @@
-exec "gtkgreet -l -s /etc/greetd/nordic-dark.css; swaymsg exit"
+exec "gtkgreet -l -s /etc/greetd/gtkgreet.css; swaymsg exit"
 
 bindsym Mod4+Shift+e exec swaynag \
   -t warning \
