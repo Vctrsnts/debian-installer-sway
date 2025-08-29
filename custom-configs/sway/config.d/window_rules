@@ -3,3 +3,4 @@
 ###############################################################################
 
 for_window [app_id="xterm"] floating enable, resize set 1280 720
+for_window [app_id="org.wezfurlong.wezterm"] border none

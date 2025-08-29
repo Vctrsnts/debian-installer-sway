@@ -2,6 +2,8 @@
 exec lxpolkit
 exec --no-startup-id clipman
 
+# start rotate background
+exec_always --no-startup-id $HOME/.config/sway/scripts/background-rotator.sh
 
 # notifications
 exec swaync
