@@ -1,6 +1,12 @@
 #!/bin/bash
 set -euo pipefail
 
+# Funciones
+apt_install(){
+    sudo apt-get update -y
+    sudo apt-get install -y --no-install-recommends "$@"
+}
+
 # cd $HOME/debian-installer-sway/custom-configs/greetd
 # sudo cp * /etc/greetd/
 # sudo chmod go+r /etc/greetd
@@ -15,3 +21,10 @@ bindsym Mod4+Shift+e exec swaynag \
   -b 'Poweroff' 'systemctl poweroff' \
   -b 'Reboot' 'systemctl reboot'
 EOF
+
+# instalacion de aplicaciones externas
+pkgs=(
+  btm
+)
+
+apt_install "${pkgs[@]}"
