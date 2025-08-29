@@ -1,9 +1,0 @@
-# Aplicaciones
-eza
-tilix
-
-# Temas e iconos
-
-# Otras herramientas
-btop
-fastfetch
