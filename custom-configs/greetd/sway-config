@@ -1,0 +1,7 @@
+exec "gtkgreet -l -s /etc/greetd/nordic-dark.css; swaymsg exit"
+
+bindsym Mod4+Shift+e exec swaynag \
+  -t warning \
+  -m 'Que vols fer?' \
+  -b 'Poweroff' 'systemctl poweroff' \
+  -b 'Reboot' 'systemctl reboot'
