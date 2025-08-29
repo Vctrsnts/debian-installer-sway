@@ -3,7 +3,7 @@
 ###############################################################################
 set $term wezterm
 set $mod Mod4
-set $memu rofi -show drun -sidebar-mode -theme custom-nord -modi drun -line-padding 4 -hide-scrollbar -show-icons
+set $menu rofi -show drun -sidebar-mode -theme custom-nord -modi drun -line-padding 4 -hide-scrollbar -show-icons
 set $gnome-schema org.gnome.desktop.interface
 
 include $HOME/.config/sway/config.d/*
