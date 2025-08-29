@@ -31,7 +31,7 @@ log_success() {
   echo -e "${NC}"
 }
 log_info() {
-  echo -e "${BLUE}"
+  echo -e "${YELLOW}"
   echo "=========================================="
   echo -e "--- $1 ---"
   echo "=========================================="
@@ -64,7 +64,7 @@ mod_terminal(){
 mod_fuentes(){
   log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
   apt_install fonts-font-awesome fonts-terminus
-  
+
   log_info "Instalación de Nerd Fonts…"
   local FONT_DIR="$USER_HOME/.local/share/fonts"
   ensure_dirs_user "$FONT_DIR"
@@ -174,7 +174,6 @@ mod_tema_oscuro() {
       echo "🧩 Iconos Colloid ya instalados: $VARIANT"
   fi
 
-
   # Aplicar configuración GTK vía gsettings (rápido)
   gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
   gsettings set org.gnome.desktop.interface gtk-theme "${THEME}-Dark" || true
@@ -238,7 +237,6 @@ EOF
 
 # Actualizar el índice de paquetes y el sistema
 log_success "Actualizando el sistema..."
-
 sudo apt update
 
 log_success "Iniciando la instalación de las aplicaciones esenciales para Sway en Debian Unstable..."
@@ -251,21 +249,23 @@ pkgs=(
   sway swaybg waybar swaylock swayidle 
   sway-notification-center 
   wayland-protocols xwayland
-  rofi lxappearance pavucontrol
+  rofi lxappearance 
   wireplumber alsa-utils 
-  polkitd lxpolkit eza git
-  grim slurp pulseaudio-utils
-  clipman wl-clipboard 
-  avahi-daemon btop xterm
-  acpi acpid curl gpg unzip pulseaudio
+  polkitd lxpolkit git
+  grim slurp clipman wl-clipboard 
+  pulseaudio pulseaudio-utils pamixer
+  xdg-user-dirs xdg-utils pavucontrol
+  curl gpg unzip wl-clipboard wlogout
   libpam0g libseat1 fastfetch
-  wlogout breeze-cursor-theme
-  greetd gtkgreet
+  avahi-daemon acpi acpid
 )
 
 apt_install "${pkgs[@]}"
 
+log_success "Activant servei avahi-daemon"
 sudo systemctl enable avahi-daemon
+
+log_success "Activant servei acpid"
 sudo systemctl enable acpid
 
 # Verificar si el archivo de sesión de Sway existe
@@ -283,7 +283,7 @@ log_success "Actualem .bashrc"
 cp $HOME/debian-installer-sway/custom-configs/bashrc $HOME/.bashrc
 source $HOME/.bashrc
 
-echo "Instalación completada. Se han instalado todos los paquetes necesarios."
+log_success "Instalación completada. Se han instalado todos los paquetes necesarios."
 echo ""
 echo "Recuerda que para la configuración, necesitas:"
 echo "1. Añadir los siguientes comandos a tu archivo de configuración de Sway (~/.config/sway/config):"
@@ -294,13 +294,19 @@ echo "2. Configurar una combinación de teclas para rofi, por ejemplo: bindsym \
 echo "3. Para establecer un fondo de pantalla, añade la siguiente línea a tu archivo de configuración de Sway, reemplazando la ruta con la de tu imagen:"
 echo "   output * bg /ruta/a/tu/imagen.jpg fill"
 echo ""
-echo "Información sobre los temas:"
-echo "Los temas de iconos 'Colloid Dark' y de apariencia 'Nordic' no se encuentran en los repositorios de Debian. Deberás descargarlos e instalarlos manualmente."
+log_success "Per si de cas, actualitzar .bashrc a traves de source \$HOME/.bashrc"
 echo ""
-echo "Una vez que se ha finalizado la instalación y has ejecutado la instrucción modules/theme_dark/install_theme.sh"
-echo "Puedes ejecutar lo siguiente, para copiar el fondo de pantalla que se usara para nwg-hello"
-echo "sudo mv /home/"$USER_HOME"/.config/background/login.jpg /usr/share/backgrounds/login.jpg"
-echo "sudo chmod 644 /usr/share/backgrounds/login.jpg"
 echo ""
-echo "Per si de cas, actualitzar .bashrc a traves de source \$HOME/.bashrc"
+log_success "Procedim a copiar els fitxers de configuració del usuari"
+cp -r $HOME/debian-installer-sway/custom-configs/backgrounds $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/btm $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/fastfetch $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/foot $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/rofi $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/sway $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/swaync $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/waybar $HOME/.config
+cp -r $HOME/debian-installer-sway/custom-configs/wezterm $HOME/.config
+echo ""
+log_success "Arribats aqui, ja pots executa script 02-post-install.sh."
 echo ""
