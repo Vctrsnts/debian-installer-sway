@@ -5,17 +5,47 @@ on:
     branches:
       - master
 
+# Evita ejecuciones duplicadas: solo se ejecuta la última
+concurrency:
+  group: release-master
+  cancel-in-progress: true
+
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Esperar 5 minutos para agrupar cambios
+        run: sleep 10
+
       - name: Checkout del repositorio
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Necesario para ver tags y commits anteriores
 
-      - name: Crear tag con fecha
+      - name: Obtener último tag
+        id: lasttag
         run: |
-          TAG="v$(date +'%Y%m%d%H%M%S')"
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "last_tag=$LAST_TAG" >> $GITHUB_ENV
+
+      - name: Comprobar si hay commits nuevos desde la última release
+        id: check
+        run: |
+          if [ -n "$LAST_TAG" ]; then
+            COUNT=$(git rev-list ${LAST_TAG}..HEAD --count)
+          else
+            COUNT=$(git rev-list HEAD --count)
+          fi
+          echo "commit_count=$COUNT" >> $GITHUB_ENV
+          if [ "$COUNT" -eq 0 ]; then
+            echo "No hay commits nuevos desde la última release. Cancelando."
+            exit 0
+          fi
+
+      - name: Crear tag con formato debian-installer-sway-YYMMDDHHMM
+        run: |
+          TAG="debian-sway-$(date +'%y%m%d%H%M')"
           echo "TAG=$TAG" >> $GITHUB_ENV
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
