@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:   # 👈 Esto habilita la ejecución manual
 
-# Evita ejecuciones duplicadas: solo se ejecuta la última
 concurrency:
   group: release-master
   cancel-in-progress: true
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout del repositorio
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Necesario para ver tags y commits anteriores
+          fetch-depth: 0
 
       - name: Obtener último tag
         id: lasttag
