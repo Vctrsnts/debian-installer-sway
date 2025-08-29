@@ -15,7 +15,7 @@ sudo systemctl enable greetd
 # instalacion de aplicaciones externas
 pkgs=(
   btm
-  thunar gvfs
+  thunar thunar-volman gvfs
 )
 
 apt_install "${pkgs[@]}"
