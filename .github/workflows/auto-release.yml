@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Esperar 5 minutos para agrupar cambios
-        run: sleep 10
+        run: sleep 300
 
       - name: Checkout del repositorio
         uses: actions/checkout@v3
