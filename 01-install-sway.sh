@@ -122,15 +122,30 @@ log_success "Per si de cas, actualitzar .bashrc a traves de source \$HOME/.bashr
 echo ""
 echo ""
 log_success "Procedim a copiar els fitxers de configuració del usuari"
-cp -r $HOME/debian-installer-sway/custom-configs/backgrounds $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/btm $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/fastfetch $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/foot $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/rofi $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/sway $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/swaync $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/waybar $HOME/.config
-cp -r $HOME/debian-installer-sway/custom-configs/wezterm $HOME/.config
+echo ""
+SRC="$HOME/debian-installer-sway/custom-configs"
+DEST_CONFIG="$HOME/.config"
+DEST_HOME="$HOME"
+
+# Recorremos todos los elementos dentro de custom-configs
+for item in "$SRC"/*; do
+  name=$(basename "$item")
+  
+  if [ -d "$item" ]; then
+    # Es un directorio → copiar a ~/.config
+    cp -r "$item" "$DEST_CONFIG" && echo "📁 Directorio '$name' copiado a $DEST_CONFIG"
+  elif [ -f "$item" ]; then
+    # Es un archivo → verificar si debe ir con punto
+    case "$name" in
+      bashrc) target=".$name" ;;
+      gtkrc-2.0) target=".$name" ;;
+      *) target="$name" ;;
+    esac
+
+    cp "$item" "$DEST_HOME/$target" && echo "📄 Archivo '$name' copiado como '$target' a $DEST_HOME"
+  fi
+done
+
 echo ""
 log_success "Arribats aqui, ja pots executa script 02-post-install.sh."
 echo ""
