@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:   # 👈 Esto habilita la ejecución manual
+  workflow_dispatch:   # Permite ejecución manual
 
 concurrency:
   group: release-master
@@ -27,10 +27,9 @@ jobs:
         id: lasttag
         run: |
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          echo "last_tag=$LAST_TAG" >> $GITHUB_ENV
+          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
 
       - name: Comprobar si hay commits nuevos desde la última release
-        id: check
         run: |
           if [ -n "$LAST_TAG" ]; then
             COUNT=$(git rev-list ${LAST_TAG}..HEAD --count)
@@ -43,9 +42,9 @@ jobs:
             exit 0
           fi
 
-      - name: Crear tag con formato YYMMDDHHMM
+      - name: Crear tag con formato YYMMDDHHMMSS
         run: |
-          TAG="v$(date +'%y%m%d%H%M')"
+          TAG="v$(date +'%y%m%d%H%M%S')"
           echo "TAG=$TAG" >> $GITHUB_ENV
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
