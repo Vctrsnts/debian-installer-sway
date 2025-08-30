@@ -195,6 +195,38 @@ sudo cp $HOME/debian-installer-sway/custom-configs/greetd/* /etc/greetd/
 sudo chmod go+r /etc/greetd
 sudo systemctl enable greetd
 
+echo ""
+log_success "Procedim a copiar els fitxers de configuració del usuari"
+echo ""
+SRC="$HOME/debian-installer-sway/custom-configs"
+DEST_CONFIG="$HOME/.config"
+DEST_HOME="$HOME"
+
+mkdir -p "$DEST_CONFIG"
+
+for item in "$SRC"/*; do
+  name=$(basename "$item")
+
+  # Saltar greetd
+  if [ "$name" = "greetd" ]; then
+    echo "⏭️  Ignorando directorio '$name'"
+    continue
+  fi
+
+  if [ -d "$item" ]; then
+    # Es un directorio → copiar dentro de ~/.config con su nombre
+    cp -r "$item" "$DEST_CONFIG/$name" && echo "📁 Directorio '$name' copiado a $DEST_CONFIG/$name"
+  elif [ -f "$item" ]; then
+    # Es un archivo → verificar si debe ir con punto
+    case "$name" in
+      bashrc|gtkrc-2.0) target=".$name" ;;
+      *) target="$name" ;;
+    esac
+
+    cp "$item" "$DEST_HOME/$target" && echo "📄 Archivo '$name' copiado como '$target' a $DEST_HOME"
+  fi
+done
+
 log_success "Procedim a copia el wallpaper de gtkgreet"
 sudo mkdir -p /usr/share/backgrounds
 sudo mv $HOME/.config/backgrounds/login.jpg /usr/share/backgrounds/login.jpg

@@ -76,13 +76,13 @@ pkgs=(
   sway swaybg waybar swaylock swayidle 
   sway-notification-center 
   wayland-protocols xwayland
-  rofi lxappearance fuzzel
+  lxappearance fuzzel
   wireplumber alsa-utils 
   polkitd lxpolkit git
   grim slurp clipman wl-clipboard 
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
-  curl gpg unzip wl-clipboard swaynag
+  curl gpg unzip wl-clipboard
   libpam0g libseat1 fastfetch
   avahi-daemon acpi acpid eza
 )
@@ -114,43 +114,8 @@ echo "1. Añadir los siguientes comandos a tu archivo de configuración de Sway 
 echo "   exec lxpolkit"
 echo "   exec --no-startup-id clipman"
 echo "   exec sway-notification-center"
-echo "2. Configurar una combinación de teclas para rofi, por ejemplo: bindsym \$mod+d exec rofi -show drun"
-echo "3. Para establecer un fondo de pantalla, añade la siguiente línea a tu archivo de configuración de Sway, reemplazando la ruta con la de tu imagen:"
-echo "   output * bg /ruta/a/tu/imagen.jpg fill"
 echo ""
 log_success "Per si de cas, actualitzar .bashrc a traves de source \$HOME/.bashrc"
-echo ""
-echo ""
-log_success "Procedim a copiar els fitxers de configuració del usuari"
-echo ""
-SRC="$HOME/debian-installer-sway/custom-configs"
-DEST_CONFIG="$HOME/.config"
-DEST_HOME="$HOME"
-
-for item in "$SRC"/*; do
-  name=$(basename "$item")
-
-  # Saltar greetd
-  if [ "$name" = "greetd" ]; then
-    echo "⏭️  Ignorando directorio '$name'"
-    continue
-  fi
-
-  if [ -d "$item" ]; then
-    # Es un directorio → copiar dentro de ~/.config con su nombre
-    cp -r "$item" "$DEST_CONFIG/$name" && echo "📁 Directorio '$name' copiado a $DEST_CONFIG/$name"
-  elif [ -f "$item" ]; then
-    # Es un archivo → verificar si debe ir con punto
-    case "$name" in
-      bashrc|gtkrc-2.0) target=".$name" ;;
-      *) target="$name" ;;
-    esac
-
-    cp "$item" "$DEST_HOME/$target" && echo "📄 Archivo '$name' copiado como '$target' a $DEST_HOME"
-  fi
-done
-
-
 echo ""
 log_success "Arribats aqui, ja pots executa script 02-post-install.sh."
 echo ""
