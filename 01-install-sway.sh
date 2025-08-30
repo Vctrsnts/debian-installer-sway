@@ -76,7 +76,7 @@ pkgs=(
   sway swaybg waybar swaylock swayidle 
   sway-notification-center 
   wayland-protocols xwayland
-  rofi lxappearance 
+  rofi lxappearance fuzzel
   wireplumber alsa-utils 
   polkitd lxpolkit git
   grim slurp clipman wl-clipboard 
