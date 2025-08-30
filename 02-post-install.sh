@@ -9,8 +9,11 @@ NC='\033[0m' # Sin color
 
 # Funciones
 apt_install(){
-    sudo apt-get update -y
-    sudo apt-get install -y --no-install-recommends "$@"
+  sudo apt-get update -y
+  sudo apt-get install -y --no-install-recommends "$@"
+}
+apt_purge(){
+  sudo apt purge -y "$@"
 }
 log_success() {
   echo -e "${GREEN}"
@@ -252,3 +255,10 @@ log_success "Instalacio de les fonts, estil obscurs i GTK"
 mod_fuentes
 mod_tema_oscuro
 mod_gtk
+echo ""
+log_success "Desinstalem paquets que ja no es faran servir"
+pkgs=(
+  git
+)
+apt_purge "${pkgs[@]}"
+sudo apt -y autoremove
