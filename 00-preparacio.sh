@@ -105,22 +105,6 @@ TARGET_FOLDER="debian-installer-sway"
 # Descargar el ZIP con nombre personalizado
 wget -O "$ZIP_FILE" "$ZIP_URL"
 
-# Descomprimir en carpeta temporal
-#TEMP_FOLDER="temp_extract"
-#mkdir -p "$TEMP_FOLDER"
-#unzip "$ZIP_FILE" -d "$TEMP_FOLDER"
-
-# Detectar la carpeta interna (la única que hay dentro del ZIP)
-#INNER_FOLDER=$(find "$TEMP_FOLDER" -mindepth 1 -maxdepth 1 -type d)
-
-# Crear carpeta destino y mover contenido
-#mkdir -p "$TARGET_FOLDER"
-#mv "$INNER_FOLDER"/* "$TARGET_FOLDER"
-
-# Limpiar
-#rm -r "$TEMP_FOLDER"
-#rm "$ZIP_FILE"
-
 log_success "Finalitzacio de la descarrega dels script"
 
 log_success "Se ejecuta la actualización del funcionamiento de los sources"
