@@ -7,6 +7,10 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # Sin color
 
+# ===== Variables =====
+TARGET_USER="${SUDO_USER:-$USER}"
+USER_HOME=$(eval echo "~$TARGET_USER")
+
 # Funciones
 apt_install(){
   sudo apt-get update -y
@@ -22,7 +26,10 @@ log_success() {
   echo "=========================================="
   echo -e "${NC}"
 }
-
+ensure_dirs_user(){
+    local dir="$1"
+    install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$dir"
+}
 mod_fuentes(){
   log_success "Instalación de fuentes adicionales (Inter, Noto Sans)…"
   apt_install fonts-font-awesome fonts-terminus
