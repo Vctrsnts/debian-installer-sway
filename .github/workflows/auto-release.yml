@@ -45,7 +45,7 @@ jobs:
 
       - name: Crear tag con formato YYMMDDHHMM
         run: |
-          TAG="-$(date +'%y%m%d%H%M')"
+          TAG="v$(date +'%y%m%d%H%M')"
           echo "TAG=$TAG" >> $GITHUB_ENV
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
