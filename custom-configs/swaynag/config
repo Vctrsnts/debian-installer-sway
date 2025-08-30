@@ -1,0 +1,17 @@
+# Configuración global
+font=JetBrains Mono 12
+edge=top
+message-padding=10
+button-padding=5
+button-gap=5
+button-border-size=1
+border-bottom-size=2
+
+# Colores inspirados en Nordic-Dark
+background=2E3440        # Fondo principal
+border=4C566A            # Borde de botones
+border-bottom=88C0D0     # Línea inferior
+text=D8DEE9              # Texto principal
+button-background=4C566A # Fondo de botones
+button-text=ECEFF4       # Texto de botones
+details-background=3B4252

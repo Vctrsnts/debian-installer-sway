@@ -3,7 +3,9 @@
 ###############################################################################
 set $term wezterm
 set $mod Mod4
-set $menu rofi -show drun -sidebar-mode -modi drun -line-padding 4 -hide-scrollbar -show-icons
+#set $menu rofi -show drun -sidebar-mode -modi drun -line-padding 4 -hide-scrollbar -show-icons
+# Definir el lanzador
+set $menu fuzzel --show drun
 set $gnome-schema org.gnome.desktop.interface
 
 include $HOME/.config/sway/config.d/*

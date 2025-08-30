@@ -82,7 +82,7 @@ pkgs=(
   grim slurp clipman wl-clipboard 
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
-  curl gpg unzip wl-clipboard wlogout
+  curl gpg unzip wl-clipboard swaynag
   libpam0g libseat1 fastfetch
   avahi-daemon acpi acpid eza
 )
