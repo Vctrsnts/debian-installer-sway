@@ -43,7 +43,7 @@ jobs:
             exit 0
           fi
 
-      - name: Crear tag con formato debian-installer-sway-YYMMDDHHMM
+      - name: Crear tag con formato YYMMDDHHMM
         run: |
           TAG="-$(date +'%y%m%d%H%M')"
           echo "TAG=$TAG" >> $GITHUB_ENV
