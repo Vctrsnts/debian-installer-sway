@@ -244,8 +244,10 @@ sudo chmod go+r /etc/greetd
 sudo systemctl enable greetd
 
 log_success "Procedim a copia el wallpaper de gtkgreet"
+sudo mkdir -p /usr/share/backgrounds
 sudo mv $HOME/.config/backgrounds/login.jpg /usr/share/backgrounds/login.jpg
 sudo chmod 644 /usr/share/backgrounds/login.jpg
+sudo chown -R root:root /usr/share/backgrounds/login.jpg
 log_success "Instalacio de les fonts, estil obscurs i GTK"
 mod_fuentes
 mod_tema_oscuro
