@@ -174,57 +174,6 @@ mod_tema_oscuro() {
 
   echo "✅ Instalación de temas e iconos completada"
 }
-
-mod_gtk() {
-  echo "🎨 Aplicando configuración GTK:"
-  echo "  Tema GTK: Nordic-Dark"
-  echo "  Iconos:   Colloid-Nord-Dark"
-  echo "  Fuente:   Sans 10"
-  echo "  Cursor:   Adwaita 24px"
-
-  # GTK3
-  mkdir -p "$HOME/.config/gtk-3.0"
-  cat << EOF > "$HOME/.config/gtk-3.0/settings.ini"
-[Settings]
-gtk-theme-name=Nordic-Dark
-gtk-icon-theme-name=Colloid-Nord-Dark
-gtk-font-name=Sans 10
-gtk-cursor-theme-name=Adwaita
-gtk-cursor-theme-size=24
-gtk-toolbar-style=GTK_TOOLBAR_BOTH
-gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-gtk-button-images=1
-gtk-menu-images=1
-gtk-enable-event-sounds=1
-gtk-enable-input-feedback-sounds=1
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle="hintmedium"
-gtk-xft-rgba="rgb"
-gtk-application-prefer-dark-theme=1
-EOF
-
-  # GTK2
-  cat << EOF > "$HOME/.gtkrc-2.0"
-gtk-theme-name="Nordic-Dark"
-gtk-icon-theme-name="Colloid-Nord-Dark"
-gtk-font-name="Sans 10"
-gtk-cursor-theme-name="Adwaita"
-gtk-cursor-theme-size=24
-gtk-toolbar-style=GTK_TOOLBAR_BOTH
-gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
-gtk-button-images=1
-gtk-menu-images=1
-gtk-enable-event-sounds=1
-gtk-enable-input-feedback-sounds=1
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle="hintmedium"
-gtk-xft-rgba="rgb"
-EOF
-
-  echo "✅ Configuración GTK aplicada"
-}
 # INICI DE APLICACIO
 
 log_success "Procedim a la instalacio de paquets suplementaris"
@@ -254,7 +203,6 @@ sudo chown -R root:root /usr/share/backgrounds/login.jpg
 log_success "Instalacio de les fonts, estil obscurs i GTK"
 mod_fuentes
 mod_tema_oscuro
-mod_gtk
 echo ""
 log_success "Desinstalem paquets que ja no es faran servir"
 pkgs=(
