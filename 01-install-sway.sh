@@ -84,7 +84,7 @@ pkgs=(
   xdg-user-dirs xdg-utils pavucontrol
   curl gpg unzip wl-clipboard wlogout
   libpam0g libseat1 fastfetch
-  avahi-daemon acpi acpid
+  avahi-daemon acpi acpid eza
 )
 
 apt_install "${pkgs[@]}"

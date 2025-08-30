@@ -235,7 +235,7 @@ pkgs=(
   gvfs gvfs-backends 
   breeze-cursor-theme
   greetd gtkgreet
-  eza foot
+  foot
 )
 
 apt_install "${pkgs[@]}"
