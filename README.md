@@ -1,62 +1,48 @@
-# 🖌️ Módulo: Aplicación Automática de Tema e Iconos GTK
+# 🖌️  Módulo: Aplicación Automática de Tema e Iconos GTK
 
-Este módulo aplica automáticamente el tema GTK, los iconos, la fuente y el cursor definidos en tu archivo `modules.conf`, evitando modificar el script cada vez que cambias de estilo. Es compatible con **GTK2** y **GTK3**.
+A partir de la instalación de **Debian GNU/Linux testing** se ejecutan una serie de scripts para dejar el sistema configurado de la siguiente manera:
+- `00-preparacio.sh` realiza la actualización de **Debian GNU/Linux testing** a **unstable**
+  - Elimina paquetes no necesarios.
+- `01-install-sway.sh` realiza la instalación, configuración de **Wayland** y **Sway**.
+  - A la hora de realizar la configuración se usan los siguientes temas:
+    - **TEMA:** *Nordic-Dark*
+    - **ICONOS:** *Colloid-Nord-Dark*
+- `02-post-install.sh` realiza la instalación y configuración de las aplicaciones que nos pueden servir.
+  - En este caso, instala y configura el gestor de sesiones **greetd** y el cliente **gtkgreet** configurado para que se asemeje lo maximo posible al tema Nord.
+Este módulo script realiza la instalación y configuración, minima, para el correcto funcionamiento de **Wayland** y **Sway** en una instalación limpia de Debian Unstable.aplica automáticamente el tema GTK, los iconos, la fuente y el cu
+rsor definidos en tu archivo `modules.conf`, evitando modificar el script cada vez que cambias de estilo. Es compatible con **GTK2** y **GTK3**.
 
 ---
 
 ## 📖 Explicación del script
 
-- **Propósito:** Centralizar la configuración visual del sistema para que cualquier cambio se haga desde `modules.conf`.
-- **Archivos modificados:**
-  - `~/.config/gtk-3.0/settings.ini`
-  - `~/.gtkrc-2.0`
+- **Propósito:** Centralizar la instalación y configuración visual del sistema.
 - **Qué aplica:** Tema GTK, paquete de iconos, fuente, tema de cursor y tamaño de cursor.
-- **Valores por defecto:** Si no defines las variables en `modules.conf`, se aplican valores estándar seguros.
 
 ---
 
 ## ⚙️ Funcionamiento
 
-1. **Carga configuración:** Usa `source` para leer `modules.conf`.
-2. **Asigna valores por defecto:** Si falta una variable, usa el valor predefinido.
-3. **Muestra resumen:** Imprime en consola qué configuración se aplicará.
-4. **Escribe configuración GTK3:** Crea/actualiza `~/.config/gtk-3.0/settings.ini`.
-5. **Escribe configuración GTK2:** Crea/actualiza `~/.gtkrc-2.0`.
-6. **Aplica cambios:** Normalmente se ven al reiniciar aplicaciones GTK.
+1. Descarga de esta (https://raw.githubusercontent.com/Vctrsnts/debian-installer-sway/refs/heads/master/00-preparacio.sh) el script de preparación de la instalación:
+    - El sistema, actualmente se realiza desde una instalación de **Debian GNU/Linux testing** (forky)
+    - Durante la preparación, pregunta el nombre de la versión, para substituir por **testing**.
+    - Posteriormente cambia a **unstable**.
+    - Para finalizar, elimina aplicaciones no necesarias.
+    - Descarga el resto de script para su posterior uso `debian-installer-sway.zip`.
+2. Mediante el script `01-install-sway.sh` se realiza la instalación y configuración del sistema.
+    - Dentro del directorio `custom-configs` puedes encontrar los ficheros de configuración para dejar el sistema con el tema **Nordic-Dark**.
+3. Mediante el script `02-post-install.sh` finaliza la instalación, instalando aplicaciones que se han creido necesarias y sus configuraciones.
 
 ---
-
-## 🔧 Configuración en `modules.conf`
-
-Ejemplo:
-
-```bash
-# Activar tema oscuro
-THEME_DARK=YES
-
-# Tema GTK
-THEME_DARK_NAME="Nordic"
-
-# Iconos
-ICON_DARK_NAME="Papirus-Dark"
-
-# Fuente
-GTK_FONT_NAME="Sans 10"
-
-# Cursor
-GTK_CURSOR_THEME="Adwaita"
-GTK_CURSOR_SIZE=0
-```
-
 **Valores por defecto:**
 
-| Variable            | Defecto           |
-|---------------------|-------------------|
-| THEME_DARK_NAME     | `Materia-dark`    |
-| ICON_DARK_NAME      | `Papirus-Dark`    |
-| GTK_FONT_NAME       | `Sans 10`         |
-| GTK_CURSOR_THEME    | `Adwaita`         |
-| GTK_CURSOR_SIZE     | `0`               |
+| Variable            | Defecto             |
+|---------------------|---------------------|
+| THEME_DARK_NAME     | `Nordic-Dark`       |
+| ICON_DARK_NAME      | `Colloid-Nord-Dark` |
+| GTK_FONT_NAME       | `Sans 10`           |
+| GTK_CURSOR_THEME    | `Breeze`            |
+| GTK_CURSOR_SIZE     | `24`                |
 
 > 💡 Los nombres deben coincidir con los instalados en el sistema:
 > - Temas GTK: `/usr/share/themes` o `~/.themes`
@@ -67,58 +53,15 @@ GTK_CURSOR_SIZE=0
 ## 🚀 Instalación y uso
 
 Estructura sugerida:
-```
-modules/
-  └── theme-dark/
-       ├── install.sh
-       └── apply_gtk_settings.sh
-modules.conf
-```
+
 
 Pasos:
 
-```bash
-# 1. Dar permisos al script
-chmod +x modules/theme-dark/apply_gtk_settings.sh
-
-# 2. Llamar al script desde install.sh
-bash "$(dirname "$0")/apply_gtk_settings.sh"
-
-# 3. Editar modules.conf con tu configuración deseada
-
-# 4. Ejecutar instalación
-./install.sh
-```
 
 ---
 
 ## 🧩 Ejemplo de cambio rápido de estilo
 
-```bash
-# Configuración actual
-THEME_DARK_NAME="Nordic"
-ICON_DARK_NAME="Papirus-Dark"
-
-# Nuevo estilo
-THEME_DARK_NAME="Materia-dark"
-ICON_DARK_NAME="Colloid-Purple-Dracula-Dark"
-
-# Aplicar cambios
-./install.sh
-```
-
 ---
 
 ## 🛟 Solución de problemas
-
-- **Tema o iconos no cambian:**
-  - Comprueba que el nombre existe en `/usr/share/themes` o `/usr/share/icons`.
-  - Cierra y reabre las aplicaciones GTK.
-- **Fuente no cambia:**
-  - Comprueba que la fuente está instalada (`fc-list | grep -i "nombre"`).
-- **Cursor no cambia:**
-  - Verifica que el tema de cursor está instalado.
-  - Algunos entornos requieren cerrar sesión para aplicar cambios globales.
-- **Permisos o rutas:**
-  - Asegúrate de que el script es ejecutable.
-  - Verifica la ruta relativa para leer `modules.conf`.
