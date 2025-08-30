@@ -24,10 +24,10 @@ log_success() {
 }
 
 mod_fuentes(){
-  log_info "Instalación de fuentes adicionales (Inter, Noto Sans)…"
+  log_success "Instalación de fuentes adicionales (Inter, Noto Sans)…"
   apt_install fonts-font-awesome fonts-terminus
 
-  log_info "Instalación de Nerd Fonts…"
+  log_success "Instalación de Nerd Fonts…"
   local FONT_DIR="$USER_HOME/.local/share/fonts"
   ensure_dirs_user "$FONT_DIR"
 
@@ -47,10 +47,10 @@ mod_fuentes(){
 
   for font in "${fonts[@]}"; do
     if [[ -d "$FONT_DIR/$font" ]] && find "$FONT_DIR/$font" -type f -name '*.ttf' | grep -q .; then
-      log_info "Fuente '$font' ya instalada; omitiendo."
+      log_success "Fuente '$font' ya instalada; omitiendo."
       continue
     fi
-    log_info "Descargando e instalando: $font"
+    log_success "Descargando e instalando: $font"
     local URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/${font}.zip"
     local ZIP_PATH="/tmp/${font}.zip"
 
