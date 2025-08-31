@@ -76,15 +76,15 @@ pkgs=(
   sway swaybg waybar swaylock swayidle 
   sway-notification-center 
   wayland-protocols xwayland
-  lxappearance fuzzel
-  wireplumber alsa-utils 
-  polkitd lxpolkit git
+  fuzzel wireplumber alsa-utils 
+  polkitd lxpolkit git dconf-cli
   grim slurp clipman wl-clipboard 
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
   curl gpg unzip wl-clipboard
   libpam0g libseat1 fastfetch
   avahi-daemon acpi acpid eza
+  xfce4-settings gsettings-desktop-schemas 
 )
 
 apt_install "${pkgs[@]}"

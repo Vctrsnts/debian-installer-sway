@@ -3,6 +3,6 @@
 ###############################################################################
 
 bar {
-  font pango:JetBrains Mono, FontAwesome 12
-  swaybar_command waybar
+    font pango:DejaVu Sans Mono, FontAwesome 12
+    swaybar_command waybar
 }

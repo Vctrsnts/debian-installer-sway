@@ -24,15 +24,28 @@ gaps outer 5
 # Gnome Theme Settings
 ###############################################################################
 
-# Set Gnome Theme
+# Exportar rutas para GTK2 y GTK3/4
+setenv GTK2_RC_FILES "$HOME/.gtkrc-2.0"
+setenv XDG_CONFIG_HOME "$HOME/.config"
+
+# Nombre del esquema de GNOME para gsettings
 set $gnome-schema org.gnome.desktop.interface
+
 exec_always {
     gsettings set $gnome-schema gtk-theme 'Nordic-Dark'
     gsettings set $gnome-schema icon-theme 'Nordzy-dark'
     gsettings set $gnome-schema cursor-theme 'Breeze_cursors'
+    gsettings set $gnome-schema cursor-size 24
     gsettings set $gnome-schema font-name 'JetBrains Mono 10'
-    gsettings set $gnome-schema monospace-font-name 'Hack 10'
+    gsettings set $gnome-schema monospace-font-name 'JetBrains Mono 10'
 }
+
+# Lanzar xfsettingsd para mantener la configuración GTK
+exec_always --no-startup-id xfsettingsd
+
+# Lanzar portal GTK para apps GTK4/Flatpak
+exec_always --no-startup-id /usr/libexec/xdg-desktop-portal-gtk
+# En Debian puede estar en /usr/lib/xdg-desktop-portal-gtk
 
 # Import Gnome settings
 exec_always import-gsettings \
