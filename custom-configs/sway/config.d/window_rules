@@ -2,7 +2,6 @@
 # Sway Window Rules
 ###############################################################################
 
-for_window [app_id="xterm"] floating enable, resize set 1280 720
 for_window [app_id="org.wezfurlong.wezterm"] border none
 for_window [app_id="foot"] floating enable, resize set 1280 720 border none
 

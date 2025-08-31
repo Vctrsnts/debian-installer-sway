@@ -173,11 +173,11 @@ mod_tema_oscuro() {
   fi
 
   # Aplicar configuración GTK vía gsettings (rápido)
-  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
-  gsettings set org.gnome.desktop.interface gtk-theme "${THEME}-Dark" || true
-  gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME" || true
-  gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita' || true
-  gsettings set org.gnome.desktop.interface font-name 'Sans 10' || true
+  gsettings set org.gnome.desktop.interface color-scheme 'Nordic-Dark' || true
+  gsettings set org.gnome.desktop.interface gtk-theme "Nordic-Dark" || true
+  gsettings set org.gnome.desktop.interface icon-theme "Nordzy-dark" || true
+  gsettings set org.gnome.desktop.interface cursor-theme 'Breeze_cursors' || true
+  gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono 10' || true
 
   echo "✅ Instalación de temas e iconos completada"
 }
@@ -196,7 +196,6 @@ pkgs=(
 
 apt_install "${pkgs[@]}"
 
-# cd $HOME/debian-installer-sway/custom-configs/greetd
 log_success "Procedim a realitzar la configuració de greetd i gtkgreet"
 sudo cp $HOME/debian-installer-sway/custom-configs/greetd/* /etc/greetd/
 sudo chmod go+r /etc/greetd

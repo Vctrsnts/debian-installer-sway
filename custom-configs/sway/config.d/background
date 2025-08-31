@@ -5,7 +5,6 @@
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # wallpaper
 output * bg ~/.config/backgrounds/Wallpaper_01.jpg fill
-#output * bg ~/Imágenes/backgrounds/ian-parker-TLcLDigmTKE-unsplash.jpg fill
 
 # Ejecutar fondo dinámico
 exec ~/.config/sway/scripts/background-rotator.sh
