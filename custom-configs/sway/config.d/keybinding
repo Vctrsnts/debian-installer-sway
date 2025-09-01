@@ -25,20 +25,27 @@ bindsym $mod+Shift+r reload; exec notify-send 'sway' 'Restarted'
 
 # Exit sway (logs you out of your Wayland session)
 # Comandos para swaynag con confirmación
-set $nag_exit    exec swaynag -t "warning" -m "¿Salir de Sway?" -b "Salir" "swaymsg exit" -b "Cancelar" "true"
-set $nag_reboot  exec swaynag -t "warning" -m "¿Reiniciar el sistema?" -b "Reiniciar" "systemctl reboot" -b "Cancelar" "true"
-set $nag_poweroff exec swaynag -t "warning" -m "¿Apagar el sistema?" -b "Apagar" "systemctl poweroff" -b "Cancelar" "true"
+bindsym $mod+Shift+e exec ~/scripts/wofi-menu.sh
 
-mode "Salir (L)ogout, (R)eboot, (P)oweroff" {
-    bindsym l $nag_exit
-    bindsym r $nag_reboot
-    bindsym p $nag_poweroff
+# Atajos directos
+bindsym $mod+Shift+p exec systemctl poweroff
+bindsym $mod+Shift+r exec systemctl reboot
+bindsym $mod+Shift+l exec swaymsg exit
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+#set $nag_exit    exec swaynag -t "warning" -m "¿Salir de Sway?" -b "Salir" "swaymsg exit" -b "Cancelar" "true"
+#set $nag_reboot  exec swaynag -t "warning" -m "¿Reiniciar el sistema?" -b "Reiniciar" "systemctl reboot" -b "Cancelar" "true"
+#set $nag_poweroff exec swaynag -t "warning" -m "¿Apagar el sistema?" -b "Apagar" "systemctl poweroff" -b "Cancelar" "true"
 
-bindsym $mod+Shift+e mode "Salir (L)ogout, (R)eboot, (P)oweroff"
+#mode "Salir (L)ogout, (R)eboot, (P)oweroff" {
+#  bindsym l $nag_exit
+#  bindsym r $nag_reboot
+#  bindsym p $nag_poweroff
+
+#  bindsym Return mode "default"
+#  bindsym Escape mode "default"
+#}
+
+#bindsym $mod+Shift+e mode "Salir (L)ogout, (R)eboot, (P)oweroff"
 
 ###############################################################################
 # Moving around
