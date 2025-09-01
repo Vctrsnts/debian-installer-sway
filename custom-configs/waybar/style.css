@@ -46,6 +46,7 @@ button:hover {
     border-bottom: 3px solid #ECEFF4;
 }
 
+#tray,
 #clock,
 #battery,
 #cpu,

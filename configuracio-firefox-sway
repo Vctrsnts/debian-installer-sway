@@ -1,0 +1,24 @@
+--------------------
+
+Firefox en wayland
+
+
+# 1. Asegúrate de iniciar Firefox con el backend Wayland
+# Puedes exportar la variable en tu shell o en ~/.profile, ~/.bashrc, etc.
+export MOZ_ENABLE_WAYLAND=1
+
+# Si usas un lanzador .desktop (menú de aplicaciones), edita la línea Exec:
+# Exec=env MOZ_ENABLE_WAYLAND=1 firefox %u
+
+# 2. Ajustes recomendados en about:config (escribe about:config en la barra de direcciones)
+# Busca y cambia:
+# widget.wayland-dmabuf-vaapi.enabled → true   (acel. vídeo VA-API en Wayland)
+# widget.wayland-dmabuf-webgl.enabled → true   (mejor rendimiento WebGL)
+# gfx.webrender.all → true                     (forzar WebRender)
+# media.ffmpeg.vaapi.enabled → true            (decodificación por hardware)
+# layers.acceleration.force-enabled → true     (forzar aceleración GPU)
+# widget.use-xdg-desktop-portal.file-picker → 1 (usar selector de archivos nativo Wayland)
+
+# 3. Verifica que estás en Wayland:
+# En Firefox, abre about:support y busca "Window Protocol"
+# Debe decir: wayland
