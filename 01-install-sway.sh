@@ -84,7 +84,8 @@ pkgs=(
   curl gpg unzip wl-clipboard
   libpam0g libseat1 fastfetch
   avahi-daemon acpi acpid eza
-  xfce4-settings gsettings-desktop-schemas 
+  lxappearance lxde-settings-daemon
+  gsettings-desktop-schemas 
 )
 
 apt_install "${pkgs[@]}"

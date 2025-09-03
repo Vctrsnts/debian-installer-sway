@@ -187,7 +187,7 @@ log_success "Procedim a la instalacio de paquets suplementaris"
 # instalacion de aplicaciones externas
 pkgs=(
   btm
-  thunar thunar-volman 
+  PCManFM
   gvfs gvfs-backends 
   breeze-cursor-theme
   greetd gtkgreet
