@@ -84,7 +84,7 @@ pkgs=(
   curl gpg unzip wl-clipboard
   libpam0g libseat1 fastfetch
   avahi-daemon acpi acpid eza
-  lxappearance lxde-settings-daemon
+  xfce4-settings
   gsettings-desktop-schemas 
 )
 

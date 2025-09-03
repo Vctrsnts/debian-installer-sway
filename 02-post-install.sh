@@ -30,15 +30,18 @@ ensure_dirs_user(){
     local dir="$1"
     install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$dir"
 }
-mod_fuentes(){
-  log_success "Instalación de fuentes adicionales (Inter, Noto Sans)…"
-  apt_install fonts-font-awesome fonts-terminus
+mod_fuentes() {
+  echo "🔤 Instalación de fuentes adicionales (Inter, Noto Sans)…"
+  read -p "¿Instalar fuentes del sistema (Font Awesome, Terminus)? (s/n): " RESP
+  [[ "$RESP" == "s" ]] && apt_install fonts-font-awesome fonts-terminus
 
-  log_success "Instalación de Nerd Fonts…"
+  echo "🔠 Instalación de Nerd Fonts en el entorno del usuario…"
+  read -p "¿Continuar con la instalación de Nerd Fonts? (s/n): " RESP
+  [[ "$RESP" != "s" ]] && return 0
+
   local FONT_DIR="$USER_HOME/.local/share/fonts"
   ensure_dirs_user "$FONT_DIR"
 
-  # Selección de familias Nerd Fonts
   local fonts=(
     CascadiaCode
     FiraCode
@@ -49,44 +52,50 @@ mod_fuentes(){
     Mononoki
     RobotoMono
     SourceCodePro
+    SauceCodePro
     UbuntuMono
   )
 
   for font in "${fonts[@]}"; do
+    echo -e "\n🔧 Preparando instalación de fuente: $font"
+    read -p "¿Instalar '$font'? (s/n): " RESP
+    [[ "$RESP" != "s" ]] && continue
+
     if [[ -d "$FONT_DIR/$font" ]] && find "$FONT_DIR/$font" -type f -name '*.ttf' | grep -q .; then
-      log_success "Fuente '$font' ya instalada; omitiendo."
+      echo "✅ Fuente '$font' ya instalada; se omite."
       continue
     fi
-    log_success "Descargando e instalando: $font"
+
+    echo "⬇️ Descargando fuente: $font"
     local URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/${font}.zip"
     local ZIP_PATH="/tmp/${font}.zip"
 
-    # Descarga
     if ! wget -q --show-progress "$URL" -O "$ZIP_PATH"; then
-      log_warn "Fallo al descargar $font desde $URL; se omite."
+      echo "⚠️ Fallo al descargar $font desde $URL; se omite."
       continue
     fi
 
-    # Carpeta destino por fuente
+    echo "📁 Instalando en: $FONT_DIR/$font"
     install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$FONT_DIR/$font"
 
-    # Descomprimir y limpiar
     if unzip -qqo "$ZIP_PATH" -d "$FONT_DIR/$font"; then
       chown -R "$TARGET_USER:$TARGET_USER" "$FONT_DIR/$font"
       find "$FONT_DIR/$font" -type f ! -iname '*.ttf' ! -iname '*.otf' -delete || true
-      log_success "Fuente $font instalada."
+      echo "✅ Fuente '$font' instalada correctamente."
     else
-      log_warn "No se pudo descomprimir $font; se omite."
+      echo "⚠️ No se pudo descomprimir '$font'; se omite."
     fi
+
     rm -f "$ZIP_PATH"
   done
 
-  # Refrescar caché de fuentes
-  sudo -u "$TARGET_USER" fc-cache -fv "$FONT_DIR" >/dev/null || fc-cache -fv "$FONT_DIR" >/dev/null || true
-  log_success "Fuentes instaladas y caché refrescada."
-}
+  echo -e "\n🔄 Refrescando caché de fuentes…"
+  read -p "¿Actualizar caché de fuentes ahora? (s/n): " RESP
+  [[ "$RESP" == "s" ]] && sudo -u "$TARGET_USER" fc-cache -fv "$FONT_DIR" >/dev/null || fc-cache -fv "$FONT_DIR" >/dev/null || true
 
-mod_tema_oscuro() {
+  echo "✅ Fuentes instaladas y caché actualizada."
+}
+mod_tema_oscuro() {  
   THEME="Nordic"
   ICON_THEME="Colloid-Dark"
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -97,36 +106,49 @@ mod_tema_oscuro() {
   ICON_TMP=$(mktemp -d) || { echo "❌ No se pudo crear directorio temporal para iconos"; return 1; }
   trap 'rm -rf "$TMP_DIR" "$ICON_TMP"' EXIT
 
-  # Dependencias
+  mkdir -p "$HOME/.local/share/themes"
+  mkdir -p "$HOME/.local/share/icons"
+
+  echo "🔧 Actualizando paquetes e instalando dependencias necesarias..."
+  read -p "¿Continuar con la instalación de dependencias? (s/n): " RESP
+  [[ "$RESP" == "s" ]] || return 0
+
   if ! sudo apt update && sudo apt install -y gtk2-engines-murrine git; then
       echo "❌ Error instalando dependencias"
       return 1
   fi
 
-  # Tema Nordic
-  if [[ ! -d "/usr/share/themes/Nordic" ]]; then
+  echo "🎨 Preparando instalación del tema Nordic..."
+  read -p "¿Instalar tema Nordic en ~/.local/share/themes? (s/n): " RESP
+  [[ "$RESP" == "s" ]] || return 0
+
+  THEME_DEST="$HOME/.local/share/themes/Nordic"
+  if [[ ! -d "$THEME_DEST" ]]; then
       git clone https://github.com/EliverLara/Nordic.git "$TMP_DIR/Nordic" &&
-      sudo mkdir -p /usr/share/themes/Nordic &&
-      sudo cp -r "$TMP_DIR/Nordic"/* /usr/share/themes/Nordic/ &&
-      echo "🎨 Tema Nordic instalado"
+      mkdir -p "$THEME_DEST" &&
+      cp -r "$TMP_DIR/Nordic"/* "$THEME_DEST/" &&
+      echo "✅ Tema Nordic instalado en el directorio del usuario"
   else
-      echo "🎨 Tema Nordic ya está instalado"
+      echo "ℹ️ Tema Nordic ya está instalado en el directorio del usuario"
   fi
 
-  # Iconos
-  mkdir -p "$HOME/.local/share/icons"
+  echo "🧩 Preparando instalación de iconos Tela-Dark..."
+  read -p "¿Instalar iconos Tela-Dark? (s/n): " RESP
+  [[ "$RESP" == "s" ]] || return 0
 
-  # Tela-Dark
   if [[ ! -d "$HOME/.local/share/icons/Tela-Dark" ]]; then
       git clone https://github.com/vinceliuice/Tela-icon-theme.git "$ICON_TMP/Tela" &&
       cd "$ICON_TMP/Tela" &&
       ./install.sh -d "$HOME/.local/share/icons" -c nord &&
-      echo "🧩 Iconos Tela-Dark instalados"
+      echo "✅ Iconos Tela-Dark instalados"
   else
-      echo "🧩 Iconos Tela-Dark ya están instalados"
+      echo "ℹ️ Iconos Tela-Dark ya están instalados"
   fi
 
-  # Colloid nord
+  echo "🧩 Preparando instalación de iconos Colloid (nord)..."
+  read -p "¿Instalar iconos Colloid nord? (s/n): " RESP
+  [[ "$RESP" == "s" ]] || return 0
+
   COLLOID_REPO="https://github.com/vinceliuice/Colloid-icon-theme.git"
   COLLOID_DIR="$ICON_TMP/Colloid"
   VARIANT="nord"
@@ -138,60 +160,60 @@ mod_tema_oscuro() {
 
   if [[ ! -d "$ICON_PATH" ]]; then
       ./install.sh -d "$HOME/.local/share/icons" -s "$VARIANT"
-      echo "🧩 Iconos Colloid instalados: $VARIANT"
+      echo "✅ Iconos Colloid instalados: $VARIANT"
   else
-      echo "🧩 Iconos Colloid ya instalados: $VARIANT"
+      echo "ℹ️ Iconos Colloid ya instalados: $VARIANT"
   fi
-  
-  # Nordzy default dark (nombre estándar)
-  ICON_TMP="${ICON_TMP:-/tmp/icons}"
+
+  echo "🧩 Preparando instalación de iconos Nordzy (default dark)..."
+  read -p "¿Instalar iconos Nordzy? (s/n): " RESP
+  [[ "$RESP" == "s" ]] || return 0
 
   NORDZY_REPO="https://github.com/MolassesLover/Nordzy-icon.git"
   NORDZY_DIR="$ICON_TMP/Nordzy"
   THEME="default"
   COLOR="dark"
-  THEME_NAME="Nordzy"  # nombre estándar por defecto
+  THEME_NAME="Nordzy"
   ICON_DEST="$HOME/.local/share/icons/$THEME_NAME"
 
-  # Clonar si no existe
   [[ -d "$NORDZY_DIR" ]] || git clone "$NORDZY_REPO" "$NORDZY_DIR"
   cd "$NORDZY_DIR" || exit 1
 
-  # Crear destino si no existe
-  mkdir -p "$HOME/.local/share/icons"
-
-  # Instalar si no está ya presente
   if [[ ! -d "$ICON_DEST" ]]; then
       ./install.sh \
           --dest "$HOME/.local/share/icons" \
           --name "$THEME_NAME" \
           --theme "$THEME" \
           --color "$COLOR"
-      echo "🧩 Iconos Nordzy instalados: $THEME ($COLOR) como '$THEME_NAME'"
+      echo "✅ Iconos Nordzy instalados como '$THEME_NAME'"
   else
-      echo "🧩 Iconos Nordzy ya instalados como '$THEME_NAME' (puede contener otras variantes)"
+      echo "ℹ️ Iconos Nordzy ya instalados como '$THEME_NAME'"
   fi
 
-  # Aplicar configuración GTK vía gsettings (rápido)
-  gsettings set org.gnome.desktop.interface color-scheme 'Nordic-Dark' || true
-  gsettings set org.gnome.desktop.interface gtk-theme "Nordic-Dark" || true
-  gsettings set org.gnome.desktop.interface icon-theme "Nordzy-dark" || true
-  gsettings set org.gnome.desktop.interface cursor-theme 'Breeze_cursors' || true
-  gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono 10' || true
+  echo "🎛️ Aplicando configuración GTK con gsettings..."
+  read -p "¿Aplicar configuración GTK e iconos ahora? (s/n): " RESP
+  [[ "$RESP" == "s" ]] || return 0
 
-  echo "✅ Instalación de temas e iconos completada"
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
+  gsettings set org.gnome.desktop.interface gtk-theme "Nordic" || true
+  gsettings set org.gnome.desktop.interface icon-theme "Nordzy" || true
+  gsettings set org.gnome.desktop.interface cursor-theme 'Breeze_cursors' || true
+  gsettings set org.gnome.desktop.interface font-name 'RobotoMon Nerd Font Medium 11' || true
+
+  echo -e "\n✅ Instalación de temas e iconos completada con confirmaciones paso a paso"
 }
+
 # INICI DE APLICACIO
 
 log_success "Procedim a la instalacio de paquets suplementaris"
 # instalacion de aplicaciones externas
 pkgs=(
   btm
-  PCManFM
+  thunar thunar-volman
   gvfs gvfs-backends 
   breeze-cursor-theme
   greetd gtkgreet
-  foot
+  foot wofi
 )
 
 apt_install "${pkgs[@]}"
