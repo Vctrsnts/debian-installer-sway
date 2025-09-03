@@ -83,15 +83,15 @@ pkgs=(
   xdg-user-dirs xdg-utils pavucontrol
   curl gpg unzip wl-clipboard
   libpam0g libseat1 fastfetch
-  avahi-daemon acpi acpid eza
+  acpi acpid eza
   xfce4-settings
   gsettings-desktop-schemas 
 )
 
 apt_install "${pkgs[@]}"
 
-log_success "Activant servei avahi-daemon"
-sudo systemctl enable avahi-daemon
+#log_success "Activant servei avahi-daemon"
+#sudo systemctl enable avahi-daemon
 
 log_success "Activant servei acpid"
 sudo systemctl enable acpid

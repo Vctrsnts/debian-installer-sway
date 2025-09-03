@@ -3,6 +3,7 @@
 ###############################################################################
 
 bar {
-    font pango:DejaVu Sans Mono, FontAwesome 12
-    swaybar_command waybar
+# font pango:DejaVu Sans Mono, FontAwesome 12
+  font pango:FiraCode Nerd Font 12
+  swaybar_command waybar
 }

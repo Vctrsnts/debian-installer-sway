@@ -71,12 +71,12 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
-        "format": "<span foreground='#E69875'>{icon}</span> {volume}%  {format_source}",
-        "format-bluetooth": "<span foreground='##E69875'>{icon}</span> {volume}%  {format_source}",
-        "format-bluetooth-muted": "<span foreground='#D699B6'>󰖁</span>  {format_source}",
-        "format-muted": "<span foreground='#7A8478'>󰖁</span>  {format_source}",
-        "format-source": "<span foreground='#E69875'></span> {volume}%",
-        "format-source-muted": "<span foreground='#F38BA8'></span>",
+        "format": "{icon} {volume}%  {format_source}",
+        "format-bluetooth": "{icon} {volume}%  {format_source}",
+        "format-bluetooth-muted": "󰖁  {format_source}",
+        "format-muted": "󰖁 {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
         "format-icons": {
           "headphone": "",
           "phone": "",

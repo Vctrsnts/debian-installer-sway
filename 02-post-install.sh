@@ -52,7 +52,6 @@ mod_fuentes() {
     Mononoki
     RobotoMono
     SourceCodePro
-    SauceCodePro
     UbuntuMono
   )
 
@@ -210,10 +209,12 @@ log_success "Procedim a la instalacio de paquets suplementaris"
 pkgs=(
   btm
   thunar thunar-volman
+  pcmanfm
   gvfs gvfs-backends 
   breeze-cursor-theme
   greetd gtkgreet
   foot wofi
+  libglib2.0-bin
 )
 
 apt_install "${pkgs[@]}"
@@ -270,3 +271,6 @@ pkgs=(
 )
 apt_purge "${pkgs[@]}"
 sudo apt -y autoremove
+
+log_success "Procedim a moure iconos Adwaita"
+sudo mv /usr/share/icons/Adwaita /usr/share/icons/Adwaita.bak

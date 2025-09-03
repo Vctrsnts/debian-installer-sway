@@ -61,16 +61,26 @@ bindsym $mod+Right focus right
 #           FEM SERVIR VARIABLES PER AIXI PODER TINDRE NOMS + ICONES           #
 #                          ALTERNATIUS ALS WORKSPACES                          #
 ################################################################################
-set $ws1 ""
-set $ws2 ""
-set $ws3 ""
-set $ws4 ""
-set $ws5 ""
-set $ws6 ""
-set $ws7 ""
-set $ws8 ""
-set $ws9 ""
-set $ws0 ""
+#set $ws1 ""
+#set $ws2 ""
+#set $ws3 ""
+#set $ws4 ""
+#set $ws5 ""
+#set $ws6 ""
+#set $ws7 ""
+#set $ws8 ""
+#set $ws9 ""
+#set $ws0 ""
+set $ws1 "🦊"   # Firefox
+set $ws2 "💻"   # Terminal
+set $ws3 "🗂️"   # Gestor de archivos
+set $ws4 "📧"   # Correo
+set $ws5 "🖥️"   # VM o herramientas
+set $ws6 "🎵"   # Spotify
+set $ws7 "🌐"   # Navegador alternativo
+set $ws8 "📚"   # Lectura
+set $ws9 "📝"   # Documentos
+set $ws0 "💬"   # Mensajería
 ################################################################################
 #                   ANEM ALS DIFERENTS WORKSPACE DISPONIBLES                   #
 ################################################################################
