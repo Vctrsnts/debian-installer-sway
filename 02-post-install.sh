@@ -209,7 +209,6 @@ log_success "Procedim a la instalacio de paquets suplementaris"
 pkgs=(
   btm
   thunar thunar-volman
-  pcmanfm
   gvfs gvfs-backends 
   breeze-cursor-theme
   greetd gtkgreet
