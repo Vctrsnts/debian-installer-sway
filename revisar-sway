@@ -91,7 +91,7 @@ set $alt Mod1
 bindsym $mod+Shift+c reload
 
 # Quit your current session and return to the log-in manager/tty:
-bindsym $mod+Shift+e exec $HOME/.config/sway/exit.sh
+bindsym $mod+Shift+e exec $HOME/.config/sway/scripts/exit.sh
 
 # Screen locking (automatic, with a timeout)
 set $lock swaylock -c 550000
