@@ -1,0 +1,127 @@
+Perfecto, pues aquí tienes la **guía completa y final** para instalar, configurar y personalizar **greetd** con **wlgreet** en Debian, ahora con la integración de un fondo Nordzy optimizado para 1080p y 4K.  
+La dejo en **una sola caja de código** para que puedas guardarla como `.md` y tenerla siempre a mano.
+
+```markdown
+# Guía completa: uso y configuración de **wlgreet** con **greetd** en Debian (con tema Nordzy y fondo 1080p/4K)
+
+## 1️⃣ ¿Qué es greetd?
+`greetd` es un gestor de inicio de sesión (display manager) ligero y flexible para Wayland y TTY.  
+Puede lanzar cualquier *greeter* compatible, como `wlgreet` o `gtkgreet`.
+
+## 2️⃣ ¿Qué es wlgreet?
+`wlgreet` es un *greeter* minimalista para `greetd`, escrito en Rust y basado en `wlroots`.  
+Se ejecuta dentro de un compositor Wayland (por ejemplo, Sway) y permite iniciar sesión gráficamente.
+
+---
+
+## 3️⃣ Instalación en Debian
+```bash
+sudo apt update
+sudo apt install greetd wlgreet sway
+```
+> `sway` se usa aquí como compositor para mostrar `wlgreet`.
+
+---
+
+## 4️⃣ Crear usuario `greeter` (si no existe)
+```bash
+sudo useradd -M -G video,input -s /bin/false greeter
+```
+- `-M` → no crea carpeta home.
+- `-G video,input` → acceso a dispositivos gráficos y de entrada.
+- `-s /bin/false` → sin shell interactiva.
+
+---
+
+## 5️⃣ Configuración básica de greetd para usar wlgreet
+
+Archivo: `/etc/greetd/config.toml`
+```toml
+[terminal]
+vt = 1
+
+[default_session]
+command = "sway --config /etc/greetd/sway-config"
+user = "greeter"
+```
+- `vt = 1` → TTY donde se ejecutará greetd.
+- `command` → Comando que lanzará el compositor con el greeter.
+- `user = "greeter"` → Usuario sin privilegios para la pantalla de login.
+
+---
+
+## 6️⃣ Configuración de Sway para wlgreet (con Nordzy)
+
+Archivo: `/etc/greetd/sway-config`
+```ini
+# Fondo Nordzy (Nord0)
+output * bg #2E3440 solid_color
+
+# Si quieres usar una imagen Nordzy optimizada para 1080p/4K:
+# output * bg /usr/share/backgrounds/nordzy-login.jpg fill
+
+# Lanzar wlgreet centrado con escala normal
+exec env LANG=es_ES.UTF-8 XKB_DEFAULT_LAYOUT=es wlgreet --layout center --scale 1.0
+
+# Salir de sway cuando wlgreet termine
+exec_always {
+    pkill -u greeter sway
+}
+
+# Ocultar el cursor tras 5 segundos de inactividad
+seat * hide_cursor 5000
+```
+
+---
+
+## 7️⃣ Fondo Nordzy optimizado para login
+1. Descarga un fondo Nordzy en alta resolución (1080p o 4K) desde una fuente fiable, por ejemplo:  
+   - [Fondos Nordzy en Reddit](https://www.reddit.com/r/nordtheme/comments/1024kdu/nord_wallpapers/?tl=es-es)  
+   - [Luces del Norte 4K en Wallpapers.com](https://es.wallpapers.com/luces-del-norte)  
+2. Guarda el archivo en:
+   ```bash
+   sudo mkdir -p /usr/share/backgrounds
+   sudo cp nordzy-login.jpg /usr/share/backgrounds/
+   ```
+3. Edita `/etc/greetd/sway-config` y activa la línea:
+   ```ini
+   output * bg /usr/share/backgrounds/nordzy-login.jpg fill
+   ```
+
+---
+
+## 8️⃣ Probar wlgreet antes de habilitar greetd
+```bash
+sudo -u greeter sway --config /etc/greetd/sway-config
+```
+> Esto lanza `wlgreet` manualmente para comprobar que funciona y que detecta teclado/ratón.
+
+---
+
+## 9️⃣ Habilitar greetd
+```bash
+sudo systemctl enable greetd
+sudo systemctl start greetd
+```
+> Tras reiniciar, `wlgreet` aparecerá como pantalla de inicio de sesión.
+
+---
+
+## 🔟 Notas importantes
+- El usuario `greeter` debe tener permisos en los grupos `video` e `input`.
+- `wlgreet` no usa temas GTK, por lo que la personalización visual se limita a fondo, colores y escala.
+- Para depurar problemas:
+  ```bash
+  sudo journalctl -u greetd -f
+  ```
+- Si quieres volver a TTY sin greetd:
+  ```bash
+  sudo systemctl disable greetd
+  sudo systemctl stop greetd
+  ```
+```
+
+---
+
+Si quieres, puedo prepararte **el fondo Nordzy ya recortado y optimizado** para que pese poco y cargue rápido en el login, sin perder calidad en 1080p y 4K.  
+¿Quieres que lo haga?

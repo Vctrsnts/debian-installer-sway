@@ -74,22 +74,24 @@ log_success "Instalando todos los paquetes necesarios..."
 
 pkgs=(
   sway swaybg waybar swaylock swayidle 
-  mako
+  sway-notification-center 
   wayland-protocols xwayland
-  wofi polkitd lxpolkit git
-  lxsession lxappearance
-  pcmanfm gvfs udisks2
+  fuzzel wireplumber alsa-utils 
+  polkitd lxpolkit git dconf-cli
   grim slurp clipman wl-clipboard 
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
   curl gpg unzip wl-clipboard
   libpam0g libseat1 fastfetch
   acpi acpid eza
-  gsettings-desktop-schemas
-  greetd wlgreet
+  xfce4-settings
+  gsettings-desktop-schemas 
 )
 
 apt_install "${pkgs[@]}"
+
+#log_success "Activant servei avahi-daemon"
+#sudo systemctl enable avahi-daemon
 
 log_success "Activant servei acpid"
 sudo systemctl enable acpid
@@ -112,7 +114,7 @@ echo "Recuerda que para la configuración, necesitas:"
 echo "1. Añadir los siguientes comandos a tu archivo de configuración de Sway (~/.config/sway/config):"
 echo "   exec lxpolkit"
 echo "   exec --no-startup-id clipman"
-echo "   exec mako"
+echo "   exec sway-notification-center"
 echo ""
 log_success "Per si de cas, actualitzar .bashrc a traves de source \$HOME/.bashrc"
 echo ""
