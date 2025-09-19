@@ -74,7 +74,7 @@ log_success "Instalando todos los paquetes necesarios..."
 
 pkgs=(
   sway swaybg waybar swaylock swayidle 
-  mako
+  mako-notifier
   wayland-protocols xwayland
   wofi polkitd lxpolkit git
   lxsession lxappearance

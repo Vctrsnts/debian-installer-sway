@@ -111,6 +111,9 @@ log_success "Se ejecuta la actualización del funcionamiento de los sources"
 sudo apt -y modernize-sources
 
 log_success "Eliminamos aplicacion aptitude"
-sudo apt purge -y aptitude w3m && sudo apt -y autoremove
+sudo apt purge -y aptitude w3m task-laptop task-spanish && sudo apt -y autoremove
+
+log_success "Instalem aplicacions wireless"
+sudo apt install -y iw wireless-tools wpasupplicant wireless-regdb
 
 exit 0
