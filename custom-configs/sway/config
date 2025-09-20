@@ -4,7 +4,8 @@
 set $term wezterm
 set $mod Mod4
 # Definir el lanzador
-set $menu fuzzel --config ~/.config/fuzzel/fuzzel.ini --show drun
+# set $menu fuzzel --config ~/.config/fuzzel/fuzzel.ini --show drun
+set $menu wofi --show drun  -i | xargs swaymsg exec --
 
 seat seat0 xcursor_theme Bibata-Modern-Classic 24
 
