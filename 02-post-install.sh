@@ -208,12 +208,10 @@ log_success "Procedim a la instalacio de paquets suplementaris"
 # instalacion de aplicaciones externas
 pkgs=(
   btm
-  thunar thunar-volman
-  gvfs gvfs-backends 
   breeze-cursor-theme
-  greetd gtkgreet
   foot wofi
   libglib2.0-bin
+  bibata-cursor-theme
 )
 
 apt_install "${pkgs[@]}"

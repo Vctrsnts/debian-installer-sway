@@ -1,4 +1,4 @@
-exec "gtkgreet -l -s /etc/greetd/gtkgreet.css; swaymsg exit"
+exec "wlgreet --config /etc/greetd/wlgreet.toml; swaymsg exit"
 
 bindsym Mod4+Shift+e exec swaynag \
   -t warning \

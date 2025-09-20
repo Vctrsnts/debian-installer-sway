@@ -1,22 +1,19 @@
 #!/bin/bash
 
-current_volume=$(/usr/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@)
+# Obtener volumen y estado de mute del sink por defecto
+current_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | head -n 1)
+mute_state=$(pactl get-sink-mute @DEFAULT_SINK@)
 
-volume="$(echo $current_volume | cut -f 2 -d " " | sed 's/\.//g')"
+# Extraer solo el valor numérico del volumen (sin %)
+volume=$(echo "$current_volume" | awk '{print $5}' | tr -d '%')
 
-if [[ $current_volume == *"MUTED"* ]]; then
+# Si está muteado
+if [[ $mute_state == *"yes"* ]]; then
     echo "  ---"
+    exit 0
 fi
 
-if [ "$volume" -lt "100" ]; then
-    volume="${volume:1}"
-fi
-
-if [ "$volume" -lt "10" ]; then
-     volume="${volume:1}"
-fi
-
-
+# Mantener la misma lógica de tu script original
 if [ "$volume" -gt "99" ]; then
     echo "  $volume%"
 elif [ "$volume" -gt "65" ]; then

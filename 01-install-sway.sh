@@ -78,7 +78,7 @@ pkgs=(
   wayland-protocols xwayland
   wofi polkitd lxpolkit git
   lxsession lxappearance
-  pcmanfm gvfs udisks2
+  pcmanfm gvfs gvfs-backends udisks2
   grim slurp clipman wl-clipboard 
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol

@@ -6,5 +6,8 @@ set $mod Mod4
 # Definir el lanzador
 set $menu fuzzel --config ~/.config/fuzzel/fuzzel.ini --show drun
 
+seat seat0 xcursor_theme Bibata-Modern-Classic 24
+
+
 
 include $HOME/.config/sway/config.d/*

@@ -1,7 +1,8 @@
 # authorize polkit-gnome
 exec lxpolkit
 #exec --no-startup-id clipman
-exec --no-startup-id xfsettingsd
+#exec --no-startup-id xfsettingsd
+exec_always --no-startup-id lxsession -s LXDE -e LXDE
 
 # start rotate background
 exec_always --no-startup-id $HOME/.config/sway/scripts/background-rotator.sh

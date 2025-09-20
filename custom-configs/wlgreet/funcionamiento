@@ -1,0 +1,185 @@
+Perfecto 🙌. Te dejo un **ejemplo completo y estándar** de cómo debería quedar tu configuración de **greetd + wlgreet**, siguiendo la documentación oficial de greetd (que usa `sway --config /etc/greetd/sway-config` como punto de entrada) y adaptado a tu caso con **wlgreet** en lugar de *gtkgreet*.  
+
+---
+
+## 📂 Árbol de directorios `/etc/greetd/`
+
+```
+/etc/greetd/
+├── config.toml
+├── sway-config
+├── wlgreet.toml
+├── style-nordic-dark.css
+└── style-nordic.css
+```
+
+---
+
+## 📜 `/etc/greetd/config.toml`
+
+```toml
+[terminal]
+vt = 1
+
+[default_session]
+command = "sway --config /etc/greetd/sway-config"
+user = "greeter"
+```
+
+👉 Esto es exactamente lo que indica la documentación oficial: greetd lanza sway con un archivo de configuración específico para el greeter.
+
+---
+
+## 📜 `/etc/greetd/sway-config`
+
+Aquí es donde lanzamos **wlgreet** en lugar de *gtkgreet*:
+
+```bash
+exec "wlgreet --config /etc/greetd/wlgreet.toml; swaymsg exit"
+```
+
+- `wlgreet` se ejecuta con su archivo de configuración propio.  
+- `swaymsg exit` asegura que sway se cierre después de que el greeter termine (cuando el usuario inicia sesión).  
+
+---
+
+## 📜 `/etc/greetd/wlgreet.toml`
+
+```toml
+[style]
+css = "/etc/greetd/style-nordic-dark.css"
+# Alternativa:
+# css = "/etc/greetd/style-nordic.css"
+
+[font]
+name = "RobotoMono Nerd Font Medium"
+size = 11
+
+[layout]
+position = "center"
+
+[session]
+command = "sway"
+```
+
+- Aquí defines la hoja de estilo que quieras usar.  
+- Puedes alternar entre `style-nordic-dark.css` y `style-nordic.css` cambiando la ruta.  
+- La fuente y el tamaño se aplican al greeter.  
+- `[session]` define qué comando se ejecuta tras iniciar sesión (en tu caso, `sway`).  
+
+---
+
+## 📜 `/etc/greetd/style-nordic-dark.css` y `/etc/greetd/style-nordic.css`
+
+Son las hojas de estilo que ya te preparé antes.  
+- `style-nordic-dark.css` → caja oscura, coherente con tu Waybar.  
+- `style-nordic.css` → caja clara, contraste visual respecto al escritorio.  
+
+---
+
+## ✅ Conclusión
+
+- **Documentación oficial**: greetd siempre arranca sway con `--config /etc/greetd/sway-config`.  
+- **gtkgreet** usa `gtkgreet.css`, pero en tu caso con **wlgreet** se usa `wlgreet.toml` y ahí se referencia el CSS que quieras.  
+- Con esta estructura, tu entorno queda 100% estándar y conforme a la documentación, solo que adaptado a wlgreet.  
+
+---
+
+👉 ¿Quieres que te prepare también un **checklist de pasos finales** (crear usuario `greeter`, habilitar greetd con systemd, probar el login) para que lo tengas todo listo de principio a fin?
+
+
+
+Muy buena observación 👌. En **wlgreet**, el bloque `[layout]` del fichero `wlgreet.toml` permite controlar la **posición de la caja de login** en la pantalla.  
+
+Según la documentación y el código fuente de wlgreet, la opción `position` admite los siguientes valores:
+
+- `"center"` → Centra la caja en la pantalla (es el valor más usado).  
+- `"top-left"` → Caja en la esquina superior izquierda.  
+- `"top"` → Caja centrada en la parte superior.  
+- `"top-right"` → Caja en la esquina superior derecha.  
+- `"left"` → Caja centrada en el lateral izquierdo.  
+- `"right"` → Caja centrada en el lateral derecho.  
+- `"bottom-left"` → Caja en la esquina inferior izquierda.  
+- `"bottom"` → Caja centrada en la parte inferior.  
+- `"bottom-right"` → Caja en la esquina inferior derecha.  
+
+---
+
+## 📜 Ejemplo en `/etc/greetd/wlgreet.toml`
+
+```toml
+[layout]
+position = "bottom-right"
+```
+
+Esto colocaría la caja de login en la esquina inferior derecha de la pantalla.
+
+---
+
+## ✅ Conclusión
+- Sí, `layout -> position` se puede modificar.  
+- Los valores posibles son: **center, top, bottom, left, right, top-left, top-right, bottom-left, bottom-right**.  
+- Lo más habitual es `"center"`, pero puedes jugar con las esquinas o bordes para darle un aire distinto a tu pantalla de login.  
+
+---
+
+👉 ¿Quieres que te prepare dos ejemplos de `wlgreet.toml`, uno con la caja en el **centro** y otro en la **esquina inferior derecha**, para que compares visualmente?
+
+
+
+--------------------
+
+
+###  reiniciar greetd
+
+sudo systemctl restart greetd
+
+
+
+### PROVAR WLGREET
+
+El “truco” que te comentaba es algo muy simple pero práctico: en lugar de editar a mano el `wlgreet.toml` cada vez que quieras probar una posición distinta, puedes crear un **pequeño script de prueba** que sobreescriba solo la línea de `position` y reinicie greetd. Así puedes ir cambiando entre valores (`center`, `bottom-right`, etc.) con un solo comando.
+
+Por ejemplo:
+
+```bash
+#!/bin/bash
+
+# Script: test-wlgreet-position.sh
+# Uso: ./test-wlgreet-position.sh center
+#      ./test-wlgreet-position.sh bottom-right
+
+POS=$1
+CONF="/etc/greetd/wlgreet.toml"
+
+if [ -z "$POS" ]; then
+  echo "Uso: $0 <center|top|bottom|left|right|top-left|top-right|bottom-left|bottom-right>"
+  exit 1
+fi
+
+# Sustituir la línea de position en el archivo
+sudo sed -i "s/^position = .*/position = \"$POS\"/" "$CONF"
+
+# Reiniciar greetd para aplicar cambios
+sudo systemctl restart greetd
+```
+
+### 🔎 Cómo usarlo
+1. Guardas el script en `/usr/local/bin/test-wlgreet-position.sh` y le das permisos:
+   ```bash
+   sudo chmod +x /usr/local/bin/test-wlgreet-position.sh
+   ```
+2. Lo ejecutas con la posición que quieras probar:
+   ```bash
+   test-wlgreet-position.sh center
+   test-wlgreet-position.sh bottom-right
+   ```
+
+### ✅ Ventaja
+- No tienes que abrir y editar el TOML a mano cada vez.  
+- Puedes probar todas las posiciones en pocos segundos.  
+- Te permite visualizar “in situ” cuál encaja mejor con tu fondo y estilo.
+
+---
+
+👉 ¿Quieres que te prepare también una **tabla comparativa rápida** con pros y contras de cada posición (ej. center = más legible, bottom-right = más minimalista, etc.) para que tengas una guía antes de probar?

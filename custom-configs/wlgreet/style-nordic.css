@@ -1,0 +1,71 @@
+/* Fondo general con imagen */
+window {
+    background-image: url("/usr/share/backgrounds/nordic-wallpaper-light.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #2E3440; /* Polar Night */
+    font-family: "JetBrainsMono", "Hack", "RobotoMono", "SourceCodePro", monospace;
+    font-size: 14px;
+}
+
+/* Caja central del login */
+#login-box {
+    background-color: rgba(236, 239, 244, 0.85); /* Nord Snow con transparencia */
+    border-radius: 12px;
+    padding: 32px;
+    margin: auto;
+    min-width: 320px;
+    max-width: 480px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+/* Etiquetas */
+label {
+    color: #2E3440;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+/* Entradas */
+entry {
+    background-color: #E5E9F0;
+    color: #2E3440;
+    border: 1px solid #D8DEE9;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 12px;
+}
+
+/* Botones */
+button {
+    background-color: #88C0D0;
+    color: #2E3440;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+button:hover {
+    background-color: #81A1C1;
+    color: #ECEFF4;
+}
+button:active {
+    background-color: #5E81AC;
+    color: #ECEFF4;
+}
+
+/* Errores */
+#error-message {
+    color: #BF616A;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* Selector de sesión */
+#session-selector {
+    background-color: #E5E9F0;
+    color: #2E3440;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-top: 12px;
+}

@@ -1,0 +1,14 @@
+[style]
+css = "/etc/greetd/style-nordic-dark.css"
+# Alternativa:
+# css = "/etc/greetd/style-nordic.css"
+
+[font]
+name = "RobotoMono Nerd Font Medium"
+size = 11
+
+[layout]
+position = "center"
+
+[session]
+command = "sway"
