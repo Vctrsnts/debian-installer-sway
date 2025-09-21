@@ -31,10 +31,6 @@ ensure_dirs_user(){
     install -d -m 755 -o "$TARGET_USER" -g "$TARGET_USER" "$dir"
 }
 mod_fuentes() {
-  echo "🔤 Instalación de fuentes adicionales (Inter, Noto Sans)…"
-  read -p "¿Instalar fuentes del sistema (Font Awesome, Terminus)? (s/n): " RESP
-  [[ "$RESP" == "s" ]] && apt_install fonts-font-awesome fonts-terminus
-
   echo "🔠 Instalación de Nerd Fonts en el entorno del usuario…"
   read -p "¿Continuar con la instalación de Nerd Fonts? (s/n): " RESP
   [[ "$RESP" != "s" ]] && return 0
@@ -148,16 +144,6 @@ mod_tema_oscuro() {
       echo "ℹ️ Iconos Nordzy ya instalados como '$THEME_NAME'"
   fi
 
-  echo "🎛️ Aplicando configuración GTK con gsettings..."
-  read -p "¿Aplicar configuración GTK e iconos ahora? (s/n): " RESP
-  [[ "$RESP" == "s" ]] || return 0
-
-  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
-  gsettings set org.gnome.desktop.interface gtk-theme "Nordic" || true
-  gsettings set org.gnome.desktop.interface icon-theme "Nordzy" || true
-  gsettings set org.gnome.desktop.interface cursor-theme 'Breeze_cursors' || true
-  gsettings set org.gnome.desktop.interface font-name 'RobotoMon Nerd Font Medium 11' || true
-
   echo -e "\n✅ Instalación de temas e iconos completada con confirmaciones paso a paso"
 }
 
@@ -166,11 +152,10 @@ mod_tema_oscuro() {
 log_success "Procedim a la instalacio de paquets suplementaris"
 # instalacion de aplicaciones externas
 pkgs=(
-  btm foot
-  breeze-cursor-theme bibata-cursor-theme
-  fonts-hack fonts-inconsolata fonts-jetbrains-mono
-  fonts-cascadia-code fonts-fira-code fonts-font-awesome
-  fonts-mononoki fonts-roboto fonts-ubuntu
+  btm foot fonts-roboto
+  bibata-cursor-theme
+  fonts-hack fonts-jetbrains-mono
+  fonts-firacode fonts-font-awesome
   libglib2.0-bin
 )
 

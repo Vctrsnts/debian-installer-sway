@@ -1,0 +1,26 @@
+# Archivo de configuración para wlgreet
+# Ubicación: /etc/greetd/wlgreet.toml
+
+# Ejecuta sway como sesión por defecto
+command = "sway"
+outputMode = "all"
+scale = 1
+
+# Fondo inspirado en Nordic (gris azulado oscuro)
+[background]
+red = 0.18    # 46/255
+green = 0.20  # 52/255
+blue = 0.25   # 64/255
+opacity = 1.0
+
+# Fuente JetBrains Mono tamaño 11
+[font]
+family = "JetBrains Mono"
+size = 11
+
+# Colores de estilo (Nordic palette)
+[style]
+background = "#2E3440"  # base
+foreground = "#D8DEE9"  # texto
+accent     = "#88C0D0"  # azul
+error      = "#BF616A"  # rojo

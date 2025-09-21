@@ -1,7 +1,7 @@
 /* Fuente y estilo base */
 * {
   font-family: "JetBrainsMono", "Hack", "RobotoMono", "SourceCodePro", monospace;
-  font-size: 14px;
+  font-size: 12px;
   min-height: 0;
   padding: 2px 4px;
   color: #ECEFF4; /* Nord Snow */

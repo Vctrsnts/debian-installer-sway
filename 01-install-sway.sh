@@ -76,14 +76,14 @@ pkgs=(
   sway swaybg waybar swaylock swayidle
   mako-notifier wayland-protocols xwayland
   wofi polkitd lxpolkit git
-  lxsession lxappearance
+  nwg-look greetd gtkgreet
   pcmanfm gvfs gvfs-backends udisks2
   clipman wl-clipboard
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
   curl gpg unzip
   libpam0g libseat1 fastfetch
-  acpi acpid eza greetd wlgreet
+  acpi acpid eza 
   gsettings-desktop-schemas
 )
 

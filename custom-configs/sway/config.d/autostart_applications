@@ -2,12 +2,11 @@
 exec lxpolkit
 #exec --no-startup-id clipman
 #exec --no-startup-id xfsettingsd
-#exec --no-startup-id lxsession -s LXDE -e LXDE
-exec --no-startup-id ~/.config/sway/scripts/init-lxsession.sh
 
-
+# load gtk themes with script
+exec_always --no-startup-id ~/.config/sway/scripts/import-gsettings.sh
 # start rotate background
-exec_always --no-startup-id $HOME/.config/sway/scripts/background-rotator.sh
+exec_always --no-startup-id ~/.config/sway/scripts/background-rotator.sh
 
 exec swayidle \
    timeout 900 'swaylock -f -c 000000' \
