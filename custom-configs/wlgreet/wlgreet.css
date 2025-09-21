@@ -1,0 +1,35 @@
+/* Fondo general con imagen */
+window {
+  background-image: url("file:///usr/share/backgrounds/login.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: #2E3440; /* Polar Night */
+  font-family: "JetBrainsMono Nerd Font Medium", monospace;
+  font-size: 14px;
+}
+
+/* Etiquetas */
+label {
+  color: #2E3440;
+}
+
+/* Entradas de texto */
+entry {
+  background-color: #E5E9F0; /* Nord Snow */
+  color: #2E3440;
+  border: 1px solid #D8DEE9;
+}
+
+/* Botones */
+button {
+  background-color: #88C0D0; /* Nord Frost */
+  color: #2E3440;
+  font-weight: bold;
+}
+
+/* Mensajes de error */
+#error-message {
+  color: #BF616A; /* Nord Red */
+}

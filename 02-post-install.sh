@@ -43,16 +43,8 @@ mod_fuentes() {
   ensure_dirs_user "$FONT_DIR"
 
   local fonts=(
-    CascadiaCode
-    FiraCode
-    Hack
-    Inconsolata
-    JetBrainsMono
     Meslo
-    Mononoki
-    RobotoMono
     SourceCodePro
-    UbuntuMono
   )
 
   for font in "${fonts[@]}"; do
@@ -131,39 +123,6 @@ mod_tema_oscuro() {
       echo "ℹ️ Tema Nordic ya está instalado en el directorio del usuario"
   fi
 
-  echo "🧩 Preparando instalación de iconos Tela-Dark..."
-  read -p "¿Instalar iconos Tela-Dark? (s/n): " RESP
-  [[ "$RESP" == "s" ]] || return 0
-
-  if [[ ! -d "$HOME/.local/share/icons/Tela-Dark" ]]; then
-      git clone https://github.com/vinceliuice/Tela-icon-theme.git "$ICON_TMP/Tela" &&
-      cd "$ICON_TMP/Tela" &&
-      ./install.sh -d "$HOME/.local/share/icons" -c nord &&
-      echo "✅ Iconos Tela-Dark instalados"
-  else
-      echo "ℹ️ Iconos Tela-Dark ya están instalados"
-  fi
-
-  echo "🧩 Preparando instalación de iconos Colloid (nord)..."
-  read -p "¿Instalar iconos Colloid nord? (s/n): " RESP
-  [[ "$RESP" == "s" ]] || return 0
-
-  COLLOID_REPO="https://github.com/vinceliuice/Colloid-icon-theme.git"
-  COLLOID_DIR="$ICON_TMP/Colloid"
-  VARIANT="nord"
-  THEME_NAME="Colloid-${VARIANT^}-Dark"
-  ICON_PATH="$HOME/.local/share/icons/$THEME_NAME"
-
-  [[ -d "$COLLOID_DIR" ]] || git clone "$COLLOID_REPO" "$COLLOID_DIR"
-  cd "$COLLOID_DIR" || return 1
-
-  if [[ ! -d "$ICON_PATH" ]]; then
-      ./install.sh -d "$HOME/.local/share/icons" -s "$VARIANT"
-      echo "✅ Iconos Colloid instalados: $VARIANT"
-  else
-      echo "ℹ️ Iconos Colloid ya instalados: $VARIANT"
-  fi
-
   echo "🧩 Preparando instalación de iconos Nordzy (default dark)..."
   read -p "¿Instalar iconos Nordzy? (s/n): " RESP
   [[ "$RESP" == "s" ]] || return 0
@@ -207,51 +166,15 @@ mod_tema_oscuro() {
 log_success "Procedim a la instalacio de paquets suplementaris"
 # instalacion de aplicaciones externas
 pkgs=(
-  btm
-  breeze-cursor-theme
-  foot wofi
+  btm foot
+  breeze-cursor-theme bibata-cursor-theme
+  fonts-hack fonts-inconsolata fonts-jetbrains-mono
+  fonts-cascadia-code fonts-fira-code fonts-font-awesome
+  fonts-mononoki fonts-roboto fonts-ubuntu
   libglib2.0-bin
-  bibata-cursor-theme
 )
 
 apt_install "${pkgs[@]}"
-
-log_success "Procedim a realitzar la configuració de greetd i gtkgreet"
-sudo cp $HOME/debian-installer-sway/custom-configs/greetd/* /etc/greetd/
-sudo chmod go+r /etc/greetd
-sudo systemctl enable greetd
-
-echo ""
-log_success "Procedim a copiar els fitxers de configuració del usuari"
-echo ""
-SRC="$HOME/debian-installer-sway/custom-configs"
-DEST_CONFIG="$HOME/.config"
-DEST_HOME="$HOME"
-
-mkdir -p "$DEST_CONFIG"
-
-for item in "$SRC"/*; do
-  name=$(basename "$item")
-
-  # Saltar greetd
-  if [ "$name" = "greetd" ]; then
-    echo "⏭️  Ignorando directorio '$name'"
-    continue
-  fi
-
-  if [ -d "$item" ]; then
-    # Es un directorio → copiar dentro de ~/.config con su nombre
-    cp -r "$item" "$DEST_CONFIG/$name" && echo "📁 Directorio '$name' copiado a $DEST_CONFIG/$name"
-  elif [ -f "$item" ]; then
-    # Es un archivo → verificar si debe ir con punto
-    case "$name" in
-      bashrc|gtkrc-2.0) target=".$name" ;;
-      *) target="$name" ;;
-    esac
-
-    cp "$item" "$DEST_HOME/$target" && echo "📄 Archivo '$name' copiado como '$target' a $DEST_HOME"
-  fi
-done
 
 log_success "Procedim a copia el wallpaper de gtkgreet"
 sudo mkdir -p /usr/share/backgrounds

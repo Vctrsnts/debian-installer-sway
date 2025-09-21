@@ -1,10 +1,8 @@
 [style]
-css = "/etc/greetd/style-nordic-dark.css"
-# Alternativa:
-# css = "/etc/greetd/style-nordic.css"
+css = "/etc/greetd/wlgreet.css"
 
 [font]
-name = "RobotoMono Nerd Font Medium"
+name = "JetBrainsMono Nerd Font Medium"
 size = 11
 
 [layout]

@@ -24,7 +24,6 @@ bindsym $mod+Shift+r reload; exec notify-send 'sway' 'Restarted'
 
 # Exit sway (logs you out of your Wayland session)
 # Comandos para swaynag con confirmación
-#bindsym $mod+Shift+e exec ~/.config/sway/scripts/wofi-menu.sh
 bindsym $mod+Shift+e exec ~/.config/sway/scripts/exit.sh
 
 ###############################################################################

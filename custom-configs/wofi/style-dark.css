@@ -1,26 +1,26 @@
-/* Wofi Nordic (claro) */
+/* Wofi Nordic-Dark (oscuro) */
 
 /* Caja de entrada */
 #input {
   margin: 10px;
   border: none;
-  background-color: #E5E9F0; /* fondo claro */
-  color: #2E3440;            /* texto oscuro */
+  background-color: #3B4252; /* fondo oscuro */
+  color: #ECEFF4;            /* texto claro */
 }
 
 /* Contenedor de resultados */
 #inner-box {
   margin: 5px;
   border: none;
-  background-color: #ECEFF4;
-  color: #2E3440;
+  background-color: #2E3440;
+  color: #E5E9F0;
 }
 
 /* Contenedor general interno */
 #outer-box {
   margin: 5px;
   border: none;
-  background-color: #ECEFF4;
+  background-color: #2E3440;
 }
 
 /* Cada ítem de texto en resultados */
@@ -28,13 +28,13 @@
   margin: 5px;
   border: none;
   background-color: transparent;
-  color: #2E3440;
+  color: #E5E9F0;
 }
 
 /* Estado hover */
 #entry:hover {
-  background-color: #D8DEE9; /* gris claro Nord */
-  color: #2E3440;
+  background-color: #434C5E; /* gris oscuro Nord */
+  color: #ECEFF4;
 }
 
 /* Estado seleccionado */
@@ -51,13 +51,13 @@
 /* Área de scroll */
 #scroll {
   margin: 5px;
-  border: 2px solid #ECEFF4;
-  background-color: #ECEFF4;
+  border: 2px solid #2E3440;
+  background-color: #2E3440;
 }
 
 /* Ventana principal */
 window {
   margin: 15px;
-  border: 2px solid #D8DEE9;
-  background-color: #ECEFF4;
+  border: 2px solid #4C566A;
+  background-color: #2E3440;
 }

@@ -73,20 +73,18 @@ sudo apt upgrade -y
 log_success "Instalando todos los paquetes necesarios..."
 
 pkgs=(
-  sway swaybg waybar swaylock swayidle 
-  mako-notifier
-  wayland-protocols xwayland
+  sway swaybg waybar swaylock swayidle
+  mako-notifier wayland-protocols xwayland
   wofi polkitd lxpolkit git
   lxsession lxappearance
   pcmanfm gvfs gvfs-backends udisks2
-  grim slurp clipman wl-clipboard 
+  clipman wl-clipboard
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
-  curl gpg unzip wl-clipboard
+  curl gpg unzip
   libpam0g libseat1 fastfetch
-  acpi acpid eza
+  acpi acpid eza greetd wlgreet
   gsettings-desktop-schemas
-  greetd wlgreet
 )
 
 apt_install "${pkgs[@]}"
