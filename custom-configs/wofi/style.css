@@ -1,26 +1,27 @@
-/* Wofi Nordic (claro) */
+/* Wofi Nordic-Dark (oscuro) - Mejorado */
 
 /* Caja de entrada */
 #input {
   margin: 10px;
   border: none;
-  background-color: #E5E9F0; /* fondo claro */
-  color: #2E3440;            /* texto oscuro */
+  background-color: #3B4252;
+  color: #ECEFF4;
+  border-radius: 6px;
 }
 
 /* Contenedor de resultados */
 #inner-box {
   margin: 5px;
   border: none;
-  background-color: #ECEFF4;
-  color: #2E3440;
+  background-color: #2E3440;
+  color: #E5E9F0;
 }
 
 /* Contenedor general interno */
 #outer-box {
   margin: 5px;
   border: none;
-  background-color: #ECEFF4;
+  background-color: #2E3440;
 }
 
 /* Cada ítem de texto en resultados */
@@ -28,36 +29,47 @@
   margin: 5px;
   border: none;
   background-color: transparent;
-  color: #2E3440;
+  color: #E5E9F0;
 }
 
 /* Estado hover */
+#entry {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 #entry:hover {
-  background-color: #D8DEE9; /* gris claro Nord */
-  color: #2E3440;
+  background-color: #434C5E;
+  color: #ECEFF4;
 }
 
 /* Estado seleccionado */
 #entry:selected {
-  background-color: #88C0D0; /* acento Nord */
+  background-color: #88C0D0;
   color: #2E3440;
 }
 
-/* Ocultar el icono de búsqueda */
+/* Estado foco (teclado) */
+#entry:focus {
+  outline: 2px solid #81A1C1;
+}
+
+/* Icono de búsqueda (estilizado) */
 #input > image.left {
-  -gtk-icon-transform: scaleX(0);
+  margin-right: 5px;
+  opacity: 0.6;
 }
 
 /* Área de scroll */
 #scroll {
   margin: 5px;
-  border: 2px solid #ECEFF4;
-  background-color: #ECEFF4;
+  border: 2px solid #2E3440;
+  background-color: #2E3440;
 }
 
 /* Ventana principal */
 window {
   margin: 15px;
-  border: 2px solid #D8DEE9;
-  background-color: #ECEFF4;
+  border: 2px solid #4C566A;
+  background-color: #2E3440;
+  border-radius: 6px;
 }

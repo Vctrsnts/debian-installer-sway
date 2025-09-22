@@ -84,7 +84,6 @@ mod_fuentes() {
 }
 mod_tema_oscuro() {  
   THEME="Nordic"
-  ICON_THEME="Colloid-Dark"
   SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
   echo "🖤 Aplicando tema GTK oscuro: $THEME con iconos $ICON_THEME"
