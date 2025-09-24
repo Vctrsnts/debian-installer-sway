@@ -78,13 +78,13 @@ pkgs=(
   wofi polkitd lxpolkit git
   nwg-look greetd gtkgreet
   pcmanfm gvfs gvfs-backends udisks2
-  clipman wl-clipboard
   pulseaudio pulseaudio-utils pamixer
   xdg-user-dirs xdg-utils pavucontrol
   curl gpg unzip
   libpam0g libseat1 fastfetch
   acpi acpid eza 
   gsettings-desktop-schemas
+  libnotify-bin
 )
 
 apt_install "${pkgs[@]}"

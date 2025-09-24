@@ -160,6 +160,9 @@ pkgs=(
 
 apt_install "${pkgs[@]}"
 
+# Son paquetes para copiar al portapapeles
+#clipman wl-clipboard
+
 log_success "Procedim a copia el wallpaper de gtkgreet"
 sudo mkdir -p /usr/share/backgrounds
 sudo mv $HOME/.config/backgrounds/login.jpg /usr/share/backgrounds/login.jpg

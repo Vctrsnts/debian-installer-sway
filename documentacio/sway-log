@@ -1,0 +1,29 @@
+# 🪟 Sway Logs y Depuración en Wayland
+
+## 🧾 Obtener logs de Sway
+
+### 1. Iniciar Sway desde una TTY
+```bash
+sway > ~/sway.log 2>&1
+```
+- Guarda toda la salida en `~/sway.log`.
+- Útil para revisar errores, advertencias y mensajes de depuración.
+
+### 2. Usar `journalctl` con systemd
+```bash
+journalctl --user-unit sway --boot
+journalctl --user-unit sway --boot -p err     # Solo errores
+journalctl --user-unit sway -f                # En tiempo real
+```
+
+### 3. Validar configuración
+```bash
+sway --validate     # Verifica sintaxis del archivo de configuración
+sway --debug        # Muestra comandos ejecutados al iniciar
+```
+
+### 4. Depurar aplicaciones Wayland
+```bash
+WAYLAND_DEBUG=1 nombre_app
+```
+- Muestra comunicación entre la app y el compositor.

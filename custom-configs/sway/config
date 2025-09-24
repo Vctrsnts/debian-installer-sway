@@ -4,6 +4,6 @@
 set $term wezterm
 set $mod Mod4
 # Definir el lanzador
-set $menu wofi -c ~/.config/wofi/config -s ~/.config/wofi/style.css -S drun -i | xargs swaymsg exec --
+set $menu wofi -c ~/.config/wofi/config -s ~/.config/wofi/style.css -S drun  -i | xargs swaymsg exec --
 
 include $HOME/.config/sway/config.d/*

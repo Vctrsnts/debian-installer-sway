@@ -56,7 +56,7 @@
     "format-ethernet": " {ifname}",
     "tooltip-format": "{ifname}: {ipaddr}",
     "format-disconnected": "󰈀 Sin red",
-    "on-click-right": "bash ~/.config/rofi/wifi_menu/rofi_wifi_menu"
+    "on-click-right": ""
   },
 
   "custom/system": {
