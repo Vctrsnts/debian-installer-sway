@@ -1,5 +1,7 @@
 # 🖌️  Módulo: Aplicación Automática de Tema e Iconos GTK
 
+![Made for Debian](https://img.shields.io/badge/Made%20for-Debian-red?logo=debian)
+
 A partir de la instalación de **Debian GNU/Linux testing** se ejecutan una serie de scripts para dejar el sistema configurado de la siguiente manera:
 - `00-preparacio.sh` realiza la actualización de **Debian GNU/Linux testing** a **unstable**
   - Elimina paquetes no necesarios.
